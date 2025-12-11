@@ -2,11 +2,10 @@ backend:
   name: github
   repo: superdevmk/mhra-site
   branch: main
+  auth_type: implicit
+  app_id: 3d0bb6de00f5c1da0b3d
 
 publish_mode: editorial_workflow
-
-site_url: https://mhra.mk
-display_url: https://mhra.mk
 
 media_folder: "assets/uploads"
 public_folder: "/assets/uploads"

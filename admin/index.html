@@ -2,16 +2,25 @@
 <html lang="en">
   <head>
     <meta charset="utf-8" />
-    <title>Blog Admin</title>
+    <title>MHRA CMS</title>
 
-    <!-- Netlify Identity widget -->
-    <script src="https://identity.netlify.com/v1/netlify-identity-widget.js"></script>
-
-    <!-- Decap (Netlify) CMS -->
+    <!-- Decap CMS -->
     <script src="https://cdn.jsdelivr.net/npm/decap-cms@latest/dist/decap-cms.js"></script>
   </head>
 
   <body>
-    <!-- Nuk duhet asgjë tjetër këtu, CMS e mbush vetë -->
+    <script>
+      CMS.init({
+        config: {
+          backend: {
+            name: "github",
+            repo: "superdevmk/mhra-site",
+            branch: "main",
+            auth_type: "Implicit",
+            app_id: "3d0bb6de00f5c1da0b3d"
+          }
+        }
+      });
+    </script>
   </body>
 </html>
