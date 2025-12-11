@@ -1,27 +1,24 @@
 backend:
-  name: git-gateway
+  name: github
+  repo: superdevmk/mhra-site
   branch: main
+  auth_type: implicit
+  app_id: 3d0bb6de00f5c1da0b3d
+  base_url: https://api.netlify.com
 
-media_folder: "assets/img"
-public_folder: "/assets/img"
+publish_mode: editorial_workflow
+
+media_folder: "assets/uploads"
+public_folder: "/assets/uploads"
 
 collections:
   - name: "blog"
-    label: "Blog posts"
-    label_singular: "Blog post"
+    label: "Блог Постови"
     folder: "blog"
     create: true
     slug: "{{slug}}"
-    extension: "md"
-    format: "frontmatter"
     fields:
-      - { label: "Title", name: "title", widget: "string" }
-      - { label: "Author", name: "author", widget: "string" }
-      - { label: "Date", name: "date", widget: "datetime" }
-      - label: "Language"
-        name: "lang"
-        widget: "select"
-        options: ["mk", "en"]
-        default: "mk"
-      - { label: "Featured image", name: "image", widget: "image", required: false }
-      - { label: "Body", name: "body", widget: "markdown" }
+      - { label: "Наслов", name: "title", widget: "string" }
+      - { label: "Датум", name: "date", widget: "datetime" }
+      - { label: "Автор", name: "author", widget: "string", default: "MHRA" }
+      - { label: "Содржина", name: "body", widget: "markdown" }
