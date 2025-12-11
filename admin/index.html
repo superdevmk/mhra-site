@@ -3,15 +3,14 @@
   <head>
     <meta charset="utf-8" />
     <title>MHRA Blog CMS</title>
-
-    <!-- Netlify Identity widget (për login/signup) -->
-    <script src="https://identity.netlify.com/v1/netlify-identity-widget.js"></script>
-
-    <!-- Decap (Netlify) CMS – UMD build, krijon globalen window.CMS -->
-    <script src="https://cdn.jsdelivr.net/npm/decap-cms@^3.0.0/dist/decap-cms.js"></script>
   </head>
 
   <body>
-    <!-- CMS e mbush vetë body-n, nuk na duhet HTML tjetër këtu -->
+    <!-- Netlify Identity widget (login / signup) -->
+    <script src="https://identity.netlify.com/v1/netlify-identity-widget.js"></script>
+
+    <!-- Decap (Netlify) CMS – UMD build, krijon window.CMS -->
+    <script src="https://cdn.jsdelivr.net/npm/decap-cms@^3.0.0/dist/decap-cms.js"></script>
+    <!-- Nuk ka nevojë për asgjë tjetër, Decap lexon /admin/config.yml vetë -->
   </body>
 </html>
