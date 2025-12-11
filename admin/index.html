@@ -4,23 +4,25 @@
     <meta charset="utf-8" />
     <title>MHRA CMS</title>
 
-    <!-- Decap CMS -->
-    <script src="https://cdn.jsdelivr.net/npm/decap-cms@latest/dist/decap-cms.js"></script>
-  </head>
+    <!-- Decap CMS (Module Version - FIXES "CMS is not defined") -->
+    <script type="module">
+      import CMS from "https://cdn.jsdelivr.net/npm/decap-cms@3.9.0/dist/decap-cms.js";
 
-  <body>
-    <script>
       CMS.init({
         config: {
           backend: {
             name: "github",
             repo: "superdevmk/mhra-site",
             branch: "main",
-            auth_type: "Implicit",
+            auth_type: "implicit",
             app_id: "3d0bb6de00f5c1da0b3d"
           }
         }
       });
     </script>
+  </head>
+
+  <body>
+    <!-- CMS automatically mounts itself -->
   </body>
 </html>
