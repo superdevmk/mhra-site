@@ -13,7 +13,7 @@
   </head>
 
   <body>
-    <!-- HEADER (NJËSOJ SI FAQET TJERA MK) -->
+    <!-- HEADER -->
     <header class="header">
       <div class="nav-wrapper">
         <div class="nav">
@@ -32,7 +32,7 @@
               <a class="nav__link" href="activities.html" data-i18n="nav_activities">Активности</a>
               <a class="nav__link" href="galleries.html" data-i18n="nav_galleries">Галерии</a>
               <a class="nav__link" href="events.html" data-i18n="nav_events">HR настани</a>
-              <a class="nav__link" href="blog.html" data-i18n="nav_blog">Блог</a>
+              <a class="nav__link nav__link--active" href="blog.html" data-i18n="nav_blog">Блог</a>
               <a class="nav__link" href="membership.html" data-i18n="nav_membership">Членство</a>
               <a class="nav__link" href="contact.html" data-i18n="nav_contact">Контакт</a>
             </div>
@@ -57,22 +57,28 @@
     <main>
       <section class="section">
         <div class="section-shell section-shell--hero">
+          
+          <!-- HEADER BLOG -->
           <div class="section__header blog__header">
-  <div>
-    <h1 class="section__title" data-i18n="blog_title">Блог</h1>
-    <p class="section__subtitle" data-i18n="blog_sub">
-      Статии, анализи и објави од областа на човечките ресурси.
-    </p>
-  </div>
+            <div>
+              <h1 class="section__title" data-i18n="blog_title">Блог</h1>
+              <p class="section__subtitle" data-i18n="blog_sub">
+                Статии, анализи и објави од областа на човечките ресурси.
+              </p>
+            </div>
 
-  <!-- Buton për autorët -->
-  <a href="/admin/" class="btn btn--outline" data-i18n="blog_new_post">
-    Напиши блог
-  </a>
-</div>
+            <!-- BUTTON PËR AUTORËT – HAP DIRECT /admin/ -->
+            <button
+              class="btn btn--outline"
+              onclick="window.location.href='/admin/'"
+              data-i18n="blog_new_post"
+              style="cursor:pointer;"
+            >
+              Напиши блог
+            </button>
+          </div>
 
-
-          <!-- GRID ME CARDS -->
+          <!-- BLOG CARDS GRID -->
           <div id="blog-grid" class="grid grid--3"></div>
           <p
             id="blog-empty"
@@ -86,15 +92,11 @@
       </section>
     </main>
 
-    <!-- MODAL / POPUP PËR READ MORE -->
+    <!-- BLOG MODAL (POPUP) -->
     <div id="blog-modal" class="blog-modal" aria-hidden="true">
       <div class="blog-modal__backdrop"></div>
       <div class="blog-modal__content">
-        <button
-          class="blog-modal__close"
-          type="button"
-          aria-label="Close"
-        >
+        <button class="blog-modal__close" type="button" aria-label="Close">
           ×
         </button>
         <h2 id="blog-modal-title"></h2>
@@ -106,7 +108,7 @@
       </div>
     </div>
 
-    <!-- FOOTER (SI FAQET TJERA) -->
+    <!-- FOOTER -->
     <footer class="footer">
       <div class="footer__inner">
         <div class="footer__top">
@@ -130,6 +132,7 @@
             </div>
           </div>
         </div>
+
         <div class="footer__bottom">
           © <span id="year-blog-mk"></span> MHRA ·
           <span data-i18n="footer_rights"></span>
