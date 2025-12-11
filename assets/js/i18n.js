@@ -99,6 +99,15 @@ const translations = {
     home_news3_body: "Разговор за искуствата, предизвиците и идните планови во HR професијата.",
     home_news_btn_read: "Прочитај повеќе",
 
+
+    /* BLOG */
+    nav_blog: "Блог",
+    blog_title: "Блог",
+    blog_sub: "Статии, анализи и објави од областа на човечките ресурси.",
+    blog_read_more: "Прочитај повеќе",
+    blog_new_post: "Напиши блог",
+
+
     /* ABOUT */
     about_title: "За нас",
     about_sub: "Професионална асоцијација посветена на развој на HR професијата во Македонија.",
@@ -332,6 +341,14 @@ const translations = {
     home_news3_meta: "November 2024",
     home_news3_body: "Discussion about experiences, challenges and future plans in HR.",
     home_news_btn_read: "Read More",
+
+    /* BLOG */
+    nav_blog: "Blog",
+    blog_title: "Blog",
+    blog_sub: "Articles, analysis and announcements from the HR field.",
+    blog_read_more: "Read More",
+    blog_new_post: "Write a blog post",
+
 
     /* ABOUT */
     about_title: "About Us",
