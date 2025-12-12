@@ -3,14 +3,29 @@
   <head>
     <meta charset="utf-8" />
     <title>MHRA Blog CMS</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <!-- Netlify Identity -->
+    <script src="https://identity.netlify.com/v1/netlify-identity-widget.js"></script>
+
+    <!-- Decap CMS (UMD, jo module) -->
+    <script src="https://unpkg.com/decap-cms@latest/dist/decap-cms.js"></script>
   </head>
 
   <body>
-    <!-- Netlify Identity widget (login / signup) -->
-    <script src="https://identity.netlify.com/v1/netlify-identity-widget.js"></script>
+    <!-- ROOT element që CMS kërkon -->
+    <div id="nc-root"></div>
 
-    <!-- Decap (Netlify) CMS – UMD build, krijon window.CMS -->
-    <script src="https://cdn.jsdelivr.net/npm/decap-cms@^3.0.0/dist/decap-cms.js"></script>
-    <!-- Nuk ka nevojë për asgjë tjetër, Decap lexon /admin/config.yml vetë -->
+    <script>
+      if (window.netlifyIdentity) {
+        window.netlifyIdentity.on("init", user => {
+          if (!user) {
+            window.netlifyIdentity.on("login", () => {
+              document.location.href = "/admin/";
+            });
+          }
+        });
+      }
+    </script>
   </body>
 </html>
