@@ -85,3 +85,31 @@ function setupEventFilters() {
     });
   });
 }
+
+// Scroll reveal animations
+document.addEventListener("DOMContentLoaded", () => {
+  const animatedEls = document.querySelectorAll(
+    ".reveal, .reveal-left, .reveal-right, .reveal-up, .reveal-scale"
+  );
+
+  if (!("IntersectionObserver" in window) || animatedEls.length === 0) {
+    animatedEls.forEach((el) => el.classList.add("is-visible"));
+    return;
+  }
+
+  const observer = new IntersectionObserver(
+    (entries, obs) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add("is-visible");
+          obs.unobserve(entry.target);
+        }
+      });
+    },
+    {
+      threshold: 0.2,
+    }
+  );
+
+  animatedEls.forEach((el) => observer.observe(el));
+});
