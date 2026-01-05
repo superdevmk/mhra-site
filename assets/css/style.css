@@ -58,6 +58,24 @@ html {
   margin: 0 auto;
 }
 
+/* Home hero – imazhi në formë elipse, si landing modern */
+.home-hero__media {
+  position: relative;
+  display: flex;
+  justify-content: flex-end;
+}
+
+.home-hero__media img {
+  width: 100%;
+  max-width: 540px;
+  height: auto;
+  border-radius: 32px;
+  object-fit: cover;
+  box-shadow: 0 26px 60px rgba(15, 23, 42, 0.45);
+  clip-path: ellipse(130% 100% at 100% 0%); /* pjesë rrethore sipër djathtas */
+}
+
+
 /* Ngjyra speciale për tekstin mbi foto */
 .home-hero .hero__kicker {
   color: var(--mhra-orange-soft);
@@ -222,15 +240,19 @@ ul {
 .nav__links {
   display: flex;
   align-items: center;
-  gap: 0.75rem;
-  font-size: 0.9rem;
+  gap: 1.6rem;             /* më shumë distancë mes linkeve */
 }
 
 .nav__link {
-  padding: 0.35rem 0.7rem;
+  font-size: 0.79rem;
+  font-weight: 500;
+  color: var(--mhra-muted);
+  text-decoration: none;
+  padding: 0.4rem 1rem;    /* më shumë “air” rreth tekst-it */
   border-radius: 999px;
-  transition: background-color 0.18s, color 0.18s;
+  transition: color 0.18s ease, background 0.18s ease, transform 0.18s ease;
 }
+
 
 .nav__link:hover {
   background-color: #e5e7eb;
@@ -1183,6 +1205,9 @@ body {
   display: block;
 }
 
+
+
+
 /* SPONSOR CARD (qendruar) */
 .sponsor-card {
   width: 100%;
@@ -1376,3 +1401,5 @@ body {
 .gallery-note {
   max-width: 640px;
 }
+
+
