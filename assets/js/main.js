@@ -5,6 +5,7 @@ document.addEventListener("DOMContentLoaded", () => {
   highlightActiveNavLink();
   setupDemoForms();
   setupEventFilters();
+  initUpcomingEventsCarousel();
 });
 
 /**
@@ -113,3 +114,19 @@ document.addEventListener("DOMContentLoaded", () => {
 
   animatedEls.forEach((el) => observer.observe(el));
 });
+
+
+function initUpcomingEventsCarousel() {
+  const track = document.querySelector(".events-circle-carousel__track");
+  if (!track) return;
+
+  const items = Array.from(track.children);
+  if (items.length === 0) return;
+
+  // Klono artikujt që të kemi 2x rresht për animacion të pafund
+  items.forEach((item) => {
+    const clone = item.cloneNode(true);
+    clone.classList.add("event-pill--clone");
+    track.appendChild(clone);
+  });
+}
