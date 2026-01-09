@@ -84,6 +84,21 @@
 <div class="section-break reveal-up">
 <img alt="" src="../assets/img/section_break.png"/>
 </div>
+
+<!-- INFORMATIVE POSTS – FULL LIST (EN) -->
+<section class="section">
+  <div class="section-shell section-shell--compact">
+    <div class="section__header reveal-up">
+      <h2 class="section__title">News</h2>
+      <p class="section__subtitle">
+        Information on current activities and announcements.
+      </p>
+    </div>
+    <div class="grid grid--3" data-info-list-page></div>
+  </div>
+</section>
+
+
 <!-- OBJECTIVES -->
 <section class="section">
 <div class="section-shell">
@@ -266,10 +281,41 @@
 </div>
 </div>
 </footer>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="../assets/js/infoPublic.js"></script>
+<script src="../assets/js/supabaseClient.js"></script>
+
 <script src="../assets/js/main.js"></script>
 <script>
       document.getElementById("year-about-mk").textContent =
         new Date().getFullYear();
     </script>
+
+<!-- INFORMATIVE POST MODAL -->
+<div class="info-modal" id="info-modal" aria-hidden="true">
+  <div class="info-modal__backdrop" data-info-modal-close></div>
+  <div class="info-modal__dialog">
+    <button class="info-modal__close" type="button" data-info-modal-close>&times;</button>
+
+    <div class="info-modal__gallery" data-has-images="false">
+      <button class="info-modal__arrow info-modal__arrow--left"
+              type="button" data-info-prev>&lsaquo;</button>
+      <div class="info-modal__viewport">
+        <div class="info-modal__track" id="info-modal-track"></div>
+      </div>
+      <button class="info-modal__arrow info-modal__arrow--right"
+              type="button" data-info-next>&rsaquo;</button>
+    </div>
+
+    <div class="info-modal__content">
+      <h2 class="info-modal__title" id="info-modal-title"></h2>
+      <p class="info-modal__subtitle" id="info-modal-subtitle"></p>
+      <div class="info-modal__body" id="info-modal-body"></div>
+    </div>
+  </div>
+</div>
+
+
+
 </body>
 </html>

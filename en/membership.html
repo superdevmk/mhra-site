@@ -50,53 +50,70 @@
 <h1 class="section__title">MHRA Membership</h1>
 <p class="section__subtitle">Become part of the professional HR community.</p>
 </div>
+
 <div class="grid grid--2">
+
 <!-- INDIVIDUAL MEMBERSHIP -->
 <div class="card reveal-up reveal-delay-1">
 <h2 class="card__title">Individual Membership</h2>
-<p class="card__body">Individual membership is intended for HR professionals, managers and people working with people and organizational development.</p>
-<ul style="
-                  font-size: 0.9rem;
-                  margin-bottom: 1rem;
-                  padding-left: 1rem;
-                  list-style: disc;
-                ">
+<p class="card__body">
+Individual membership is intended for HR professionals, managers and people working with people and organizational development.
+</p>
+
+<ul style="font-size:0.9rem;margin-bottom:1rem;padding-left:1rem;list-style:disc;">
 <li>✔ Access to events at preferential conditions</li>
 <li>✔ Possibility to participate in working groups</li>
 <li>✔ Access to selected HR resources and research</li>
 </ul>
+
 <p class="card__meta">Membership fee: [sample amount]</p>
-<form class="form" data-demo-form="" data-demo-message="Individual membership (demo)">
+
+<form class="form"
+      data-mail-form
+      data-mail-subject="Individual membership application">
+
 <div class="form__row">
 <label class="form__label">Full Name</label>
-<input class="form__input" required="" type="text"/>
+<input class="form__input" type="text" name="Full Name" required>
 </div>
+
 <div class="form__row">
 <label class="form__label">Email</label>
-<input class="form__input" required="" type="email"/>
+<input class="form__input" type="email" name="Email" required>
 </div>
+
 <div class="form__row">
 <label class="form__label">Phone</label>
-<input class="form__input" type="text"/>
+<input class="form__input" type="text" name="Phone">
 </div>
+
 <div class="form__row">
 <label class="form__label">Organization</label>
-<input class="form__input" type="text"/>
+<input class="form__input" type="text" name="Organization">
 </div>
+
 <div class="form__row">
 <label class="form__label">
-<input required="" type="checkbox"/>
-                     <span>I agree with the membership terms.</span>
+<input type="checkbox" name="Agreement" required>
+<span>I agree with the membership terms.</span>
 </label>
 </div>
-<button class="btn btn--primary" type="submit">Send Application</button>
+
+<button class="btn btn--primary" type="submit">
+Send Application
+</button>
+
 </form>
 </div>
+
 <!-- CORPORATE MEMBERSHIP -->
 <div class="card reveal-up reveal-delay-2">
 <h2 class="card__title">Corporate Membership</h2>
-<p class="card__body">Corporate membership enables organizations to engage their HR teams and management in MHRA activities.</p>
-<div class="table-wrapper" style="margin-bottom: 1rem">
+<p class="card__body">
+Corporate membership enables organizations to engage their HR teams and management in MHRA activities.
+</p>
+
+<div class="table-wrapper" style="margin-bottom:1rem">
 <table class="table">
 <thead>
 <tr>
@@ -124,38 +141,54 @@
 </tbody>
 </table>
 </div>
-<form class="form" data-demo-form="" data-demo-message="Corporate membership (demo)">
+
+<form class="form"
+      data-mail-form
+      data-mail-subject="Corporate membership request">
+
 <div class="form__row">
 <label class="form__label">Organization Name</label>
-<input class="form__input" required="" type="text"/>
+<input class="form__input" type="text" name="Organization Name" required>
 </div>
+
 <div class="form__row">
 <label class="form__label">Contact Person</label>
-<input class="form__input" required="" type="text"/>
+<input class="form__input" type="text" name="Contact Person" required>
 </div>
+
 <div class="form__row">
 <label class="form__label">Email</label>
-<input class="form__input" required="" type="email"/>
+<input class="form__input" type="email" name="Email" required>
 </div>
+
 <div class="form__row">
 <label class="form__label">Phone</label>
-<input class="form__input" type="text"/>
+<input class="form__input" type="text" name="Phone">
 </div>
+
 <div class="form__row">
 <label class="form__label">Select package</label>
-<select class="form__select">
+<select class="form__select" name="Package">
 <option>Basic</option>
 <option>Standard</option>
 <option>Premium</option>
 </select>
 </div>
-<button class="btn btn--primary" type="submit">Send Request</button>
+
+<button class="btn btn--primary" type="submit">
+Send Request
+</button>
+
 </form>
 </div>
+
 </div>
 </div>
 </section>
 </main>
+
+
+
 <!-- FOOTER -->
 <footer class="footer">
 <div class="footer__inner">

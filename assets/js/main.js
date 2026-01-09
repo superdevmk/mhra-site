@@ -120,13 +120,54 @@ function initUpcomingEventsCarousel() {
   const track = document.querySelector(".events-circle-carousel__track");
   if (!track) return;
 
-  const items = Array.from(track.children);
-  if (items.length === 0) return;
+  if (track.dataset.cloned === "true") return; // avoid double-clone
 
-  // Klono artikujt që të kemi 2x rresht për animacion të pafund
+  const items = Array.from(track.children);
+  if (!items.length) return;
+
   items.forEach((item) => {
-    const clone = item.cloneNode(true);
-    clone.classList.add("event-pill--clone");
-    track.appendChild(clone);
+    track.appendChild(item.cloneNode(true));
   });
+
+  track.dataset.cloned = "true";
 }
+
+/* ===============================
+   MEMBERSHIP FORMS -> mailto
+   =============================== */
+(function () {
+  const TO = "contact@mhra.mk";
+
+  function buildBody(form) {
+    const fd = new FormData(form);
+    const lines = [];
+
+    for (const [key, value] of fd.entries()) {
+      if (value === "on") {
+        lines.push(`${key}: YES`);
+      } else {
+        lines.push(`${key}: ${value}`);
+      }
+    }
+
+    return lines.join("\n");
+  }
+
+  document.addEventListener("submit", function (e) {
+    const form = e.target.closest("form[data-mail-form]");
+    if (!form) return;
+
+    e.preventDefault();
+
+    if (!form.checkValidity()) {
+      form.reportValidity();
+      return;
+    }
+
+    const subject = form.getAttribute("data-mail-subject");
+    const body = buildBody(form);
+
+    window.location.href =
+      `mailto:${TO}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+  });
+})();

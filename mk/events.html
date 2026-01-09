@@ -85,10 +85,12 @@
 <header class="header">
 <div class="nav-wrapper">
 <div class="nav">
+<!-- BRAND -->
 <a class="nav__brand" href="index.html">
 <img alt="MHRA Logo" class="nav__logo-img" src="../assets/img/mhra_logo.jpg"/>
 </a>
 <nav class="nav__menu">
+<!-- NAV LINKS -->
 <div class="nav__links">
 <a class="nav__link" href="index.html">Почетна</a>
 <!-- За нас  → Информативни содржини -->
@@ -104,12 +106,14 @@
 <!-- Членство e heqim nga menu, e ke si buton "Стани член" -->
 <a class="nav__link" href="contact.html">Контакт</a>
 </div>
-<div class="nav__lang"><a class="nav__lang-btn nav__lang-btn--active" href="events.html">MK</a> | <a class="nav__lang-btn" href="../en/events.html">EN</a></div>
+<!-- LANGUAGE SWITCH -->
+<div class="nav__lang"><a class="nav__lang-btn nav__lang-btn--active" href="index.html">MK</a> | <a class="nav__lang-btn" href="../en/index.html">EN</a></div>
+<!-- CTA -->
 <div class="nav__cta">
 <a class="btn btn--primary" href="membership.html">Стани член</a>
 </div>
 </nav>
-<button aria-label="menu" class="nav__toggle">
+<button aria-label="Menu" class="nav__toggle">
 <span class="nav__toggle-bar"></span>
 </button>
 </div>
@@ -126,103 +130,16 @@
 <h1 class="section__title">HR настани</h1>
 <p class="section__subtitle">HR кафе, конференции, HR Weekend и обуки организирани од МАЧР.</p>
 </div>
-<!-- FILTER -->
-<div class="section" data-event-filters="">
-<div class="section__header reveal-up">
-<h2 class="section__title">Филтер по тип</h2>
-</div>
-<div class="hero__actions reveal-up reveal-delay-1">
-<button class="btn btn--primary" data-filter="all" type="button">Сите</button>
-<button class="btn btn--outline" data-filter="cafe" type="button">HR кафе</button>
-<button class="btn btn--outline" data-filter="conference" type="button">HR конференција</button>
-<button class="btn btn--outline" data-filter="weekend" type="button">HR Weekend</button>
-<button class="btn btn--outline" data-filter="training" type="button">HR обуки</button>
-</div>
-</div>
-<!-- EVENT CARDS -->
-<div class="grid grid--3">
-<!-- HR Café Event – vetëm përmbledhје -->
-<article class="card reveal-up reveal-delay-1" data-event-type="cafe">
-<span class="badge">HR кафе</span>
-<p class="card__meta">Објавено на: 8.10.2021 · 15:57</p>
-<h3 class="card__title">
-                Втoро Меѓународно HR Café &amp; Networking
-              </h3>
-<p class="card__meta">
-                13 октомври 2021 (среда) · 17:30 · онлајн · „Bullying at the
-                Workplace“
-              </p>
-<img alt="Втoро Меѓународно HR Café &amp; Networking – Bullying at the Workplace" src="../assets/img/event.jpg" style="border-radius: 0.9rem; margin: 0.75rem 0;"/>
-<p class="card__body">
-                Со задоволство Ве покануваме на Втoрото Меѓународно HR Café
-                &amp; Networking во организација на МАЧР, насловено како
-                „Bullying at the Workplace“ (во онлајн формат). Настанот ќе се
-                одржи на 13 Октомври (Среда), со почеток во 17:30 часот...
-              </p>
-<button class="btn btn--outline" data-modal-target="event1-modal" type="button">
-                Прочитај повеќе
-              </button>
-</article>
-</div>
-</div>
+
+
+
+<div class="grid grid--3" data-hr-events></div>
+
+
+
 </section>
 </main>
-<!-- MODAL – FULL EVENT CONTENT -->
-<div aria-hidden="true" class="modal" id="event1-modal">
-<div class="modal__backdrop" data-modal-close=""></div>
-<div aria-labelledby="event1-title" aria-modal="true" class="modal__dialog" role="dialog">
-<button aria-label="Затвори" class="modal__close" data-modal-close="" type="button">
-          ×
-        </button>
-<h2 class="modal__title" id="event1-title">
-          Втoро Меѓународно HR Café &amp; Networking
-        </h2>
-<div class="modal__meta">
-          Објавено на: 8.10.2021 · 15:57 · HR Café · онлајн · „Bullying at the
-          Workplace“
-        </div>
-<img alt="Втoро Меѓународно HR Café &amp; Networking – Bullying at the Workplace" src="../assets/img/event.jpg" style="border-radius: 1rem; margin-bottom: 1rem;"/>
-<div class="modal__body">
-<p>
-            Со задоволство Ве покануваме на Втoрото Меѓународно HR Café &amp;
-            Networking во организација на МАЧР, насловено како „Bullying at the
-            Workplace“ (во онлајн формат). Настанот ќе се одржи на 13 Октомври
-            (Среда), со почеток во 17:30 часот, каде гостин-говорник ќе биде
-            Професор Џорџ Т. Павлидис (Prof. George Th. Pavlidis) – Scientific
-            Director of the 38 “DYSLEXIA CENTERS – PAVLIDIS METHOD”, Greece,
-            Cyprus, Serbia.
-          </p>
-<p>
-            Работни јазици на настанот ќе бидат македонскиот и англискиот
-            јазик. Исто како и на минатото HR Café &amp; Networking, кое го
-            организиравме во септември, освен презентација од страна на
-            гостинот-говорник, во рамките на настанот е предвидена и
-            интерактивна работилница за дискусија и вмрежување на учесниците.
-          </p>
-<p>
-            За Ваша регистрација за учество, Ве замолуваме да го пополните
-            краткиот формулар:
-            <a href="https://docs.google.com/forms/d/e/1FAIpQLSdHBd9okhNtt0xtfOlXKnOd4D7KIqvJpSgdSL46TdkVBEQ5-A/viewform" rel="noopener" target="_blank">
-              линк за пријава
-            </a>.
-          </p>
-<p>
-            Сите кои ќе се пријават за учество на настанот, ќе имаат можност да
-            набават влезници со попуст од 25% за престојната 13. Меѓународна
-            MHRA Конференција:
-            <a href="https://mhraconference.mk/mk/home-slider-3/" rel="noopener" target="_blank">
-              линк до конференцијата
-            </a>.
-          </p>
-<p>
-            На еден ден пред одржување на HR Café &amp; Networking, на
-            регистрираната мејл адреса ќе Ви биде доставен линк за пристап до
-            настанот, заедно со КОД за 25% попуст за влезници за конференцијата.
-          </p>
-<p>Ве очекуваме!</p>
-</div>
-</div>
-</div>
+
 <!-- FOOTER -->
 <footer class="footer">
 <div class="footer__inner">
@@ -335,7 +252,6 @@
 </div>
 </div>
 </footer>
-<script src="../assets/js/main.js"></script>
 
 <!-- JS PËR MODAL-IN -->
 <script>
@@ -378,5 +294,39 @@
           new Date().getFullYear();
       })();
     </script>
+
+
+
+<div class="info-modal" id="content-modal" aria-hidden="true">
+  <div class="info-modal__backdrop" data-info-modal-close></div>
+  <div class="info-modal__dialog">
+    <button class="info-modal__close" type="button" data-info-modal-close>&times;</button>
+
+    <div class="info-modal__gallery" data-has-images="false">
+      <button class="info-modal__arrow info-modal__arrow--left" type="button" data-info-prev>&lsaquo;</button>
+      <div class="info-modal__viewport">
+        <div class="info-modal__track" id="info-modal-track"></div>
+      </div>
+      <button class="info-modal__arrow info-modal__arrow--right" type="button" data-info-next>&rsaquo;</button>
+    </div>
+
+    <div class="info-modal__content">
+      <h2 class="info-modal__title" id="content-modal-title"></h2>
+      <p class="info-modal__subtitle" id="content-modal-subtitle"></p>
+      <div class="info-modal__body" id="content-modal-body"></div>
+    </div>
+  </div>
+</div>
+
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="/assets/js/supabaseClient.js"></script>
+<script src="/assets/js/contentPublic.js"></script>
+<script src="/assets/js/main.js"></script>
+
+
+
+
+
 </body>
 </html>

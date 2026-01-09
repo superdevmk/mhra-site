@@ -13,10 +13,12 @@
 <header class="header">
 <div class="nav-wrapper">
 <div class="nav">
+<!-- BRAND -->
 <a class="nav__brand" href="index.html">
 <img alt="MHRA Logo" class="nav__logo-img" src="../assets/img/mhra_logo.jpg"/>
 </a>
 <nav class="nav__menu">
+<!-- NAV LINKS -->
 <div class="nav__links">
 <a class="nav__link" href="index.html">Почетна</a>
 <!-- За нас  → Информативни содржини -->
@@ -32,12 +34,14 @@
 <!-- Членство e heqim nga menu, e ke si buton "Стани член" -->
 <a class="nav__link" href="contact.html">Контакт</a>
 </div>
-<div class="nav__lang"><a class="nav__lang-btn nav__lang-btn--active" href="contact.html">MK</a> | <a class="nav__lang-btn" href="../en/contact.html">EN</a></div>
+<!-- LANGUAGE SWITCH -->
+<div class="nav__lang"><a class="nav__lang-btn nav__lang-btn--active" href="index.html">MK</a> | <a class="nav__lang-btn" href="../en/index.html">EN</a></div>
+<!-- CTA -->
 <div class="nav__cta">
 <a class="btn btn--primary" href="membership.html">Стани член</a>
 </div>
 </nav>
-<button aria-label="menu" class="nav__toggle">
+<button aria-label="Menu" class="nav__toggle">
 <span class="nav__toggle-bar"></span>
 </button>
 </div>
@@ -45,56 +49,93 @@
 </header>
 <main>
 <section class="section">
+<section class="section">
 <div class="section-shell section-shell--hero">
 <!-- HERO HEADER -->
 <div class="section__header reveal-up">
-<h1 class="section__title">Контакт</h1>
-<p class="section__subtitle">Контактирајте нè за членство, соработка или дополнителни информации.</p>
+<h1 class="section__title">КОНТАКТ</h1>
+<p class="section__subtitle">Контактирајте не за членство, соработка или повише информации.</p>
 </div>
 <div class="grid grid--2">
-<!-- LEFT SIDE -->
-<div class="reveal-up reveal-delay-1">
-<!-- CONTACT INFO -->
-<div class="card">
-<h2 class="card__title">Контакт податоци</h2>
-<p class="card__body">Адреса: [пример адреса]&lt;br /&gt;Email: info@mhra.mk&lt;br /&gt;Телефон: +389 2 000 000&lt;br /&gt;Работно време: понеделник – петок, 09:00–17:00</p>
-</div>
-<!-- LOCATION BOX -->
+
+  <!-- LEFT SIDE -->
+  <div class="reveal-up reveal-delay-1">
+
+    <!-- CONTACT INFO -->
+    <div class="card">
+      <h2 class="card__title">КОНТАКТ</h2>
+      <p class="card__body">
+        Email: info@mhra.mk<br />
+        Phone: +389 78 389277<br />
+        Office hours: Monday – Friday, 09:00–17:00
+      </p>
+    </div>
+
+    <!-- LOCATION BOX -->
 <div class="card" style="margin-top: 1rem">
-<h2 class="card__title">Локација</h2>
-<div style="
-                    background: #1118270d;
-                    border-radius: 1rem;
-                    padding: 2rem;
-                    text-align: center;
-                    font-size: 0.9rem;
-                  ">Тука може да се вметне мапа (Google Maps embed) во иднина.</div>
+  <h2 class="card__title">Локација</h2>
+
+  <div style="border-radius:1rem; overflow:hidden; height:320px;">
+    <iframe
+      src="https://www.google.com/maps?q=42.00670458246045,21.38313748203787&z=16&output=embed"
+      width="100%"
+      height="100%"
+      style="border:0;"
+      loading="lazy"
+      referrerpolicy="no-referrer-when-downgrade">
+    </iframe>
+  </div>
 </div>
-</div>
-<!-- RIGHT SIDE – FORM -->
+
+
+  </div> <!-- ✅ Mbyllet LEFT SIDE -->
+
+  <!-- RIGHT SIDE – FORM -->
 <div class="card reveal-up reveal-delay-2">
-<h2 class="card__title">Испратете порака</h2>
-<form class="form" data-demo-form="" data-demo-message="Пораката е испратена (демо).">
-<div class="form__row">
-<label class="form__label">Име и презиме</label>
-<input class="form__input" required="" type="text"/>
+  <h2 class="card__title">Прати Порака</h2>
+
+  <form class="form"
+        data-mail-form
+        data-mail-subject="Контакт форма – порака од веб сајт">
+
+    <div class="form__row">
+      <label class="form__label">Име и Презиме</label>
+      <input class="form__input"
+             type="text"
+             name="Име и Презиме"
+             required>
+    </div>
+
+    <div class="form__row">
+      <label class="form__label">Е Пошта</label>
+      <input class="form__input"
+             type="email"
+             name="Е Пошта"
+             required>
+    </div>
+
+    <div class="form__row">
+      <label class="form__label">Субјект</label>
+      <input class="form__input"
+             type="text"
+             name="Субјект">
+    </div>
+
+    <div class="form__row">
+      <label class="form__label">Порака</label>
+      <textarea class="form__textarea"
+                name="Порака"
+                required></textarea>
+    </div>
+
+    <button class="btn btn--primary" type="submit">
+      Прати
+    </button>
+
+  </form>
 </div>
-<div class="form__row">
-<label class="form__label">Email</label>
-<input class="form__input" required="" type="email"/>
-</div>
-<div class="form__row">
-<label class="form__label">Наслов</label>
-<input class="form__input" type="text"/>
-</div>
-<div class="form__row">
-<label class="form__label">Порака</label>
-<textarea class="form__textarea" required=""></textarea>
-</div>
-<button class="btn btn--primary" type="submit">Испрати</button>
-</form>
-</div>
-</div>
+
+
 </div>
 </section>
 </main>

@@ -50,53 +50,70 @@
 <h1 class="section__title">Членство во МАЧР</h1>
 <p class="section__subtitle">Стани дел од професионалната HR заедница.</p>
 </div>
+
 <div class="grid grid--2">
+
 <!-- INDIVIDUAL MEMBERSHIP -->
 <div class="card reveal-up reveal-delay-1">
 <h2 class="card__title">Индивидуално членство</h2>
-<p class="card__body">Индивидуалното членство е наменето за HR професионалци, менаџери и лица кои работат со луѓе и организациски развој.</p>
-<ul style="
-                  font-size: 0.9rem;
-                  margin-bottom: 1rem;
-                  padding-left: 1rem;
-                  list-style: disc;
-                ">
+<p class="card__body">
+Индивидуалното членство е наменето за HR професионалци, менаџери и лица кои работат со луѓе и организациски развој.
+</p>
+
+<ul style="font-size:0.9rem;margin-bottom:1rem;padding-left:1rem;list-style:disc;">
 <li>✔ Пристап до настани по поволни услови</li>
 <li>✔ Можност за учество во работни групи</li>
 <li>✔ Пристап до избрани HR ресурси и истражувања</li>
 </ul>
+
 <p class="card__meta">Членарина: [пример износ]</p>
-<form class="form" data-demo-form="" data-demo-message="Individual membership (demo)">
+
+<form class="form"
+      data-mail-form
+      data-mail-subject="Индивидуално членство – пријава">
+
 <div class="form__row">
 <label class="form__label">Име и презиме</label>
-<input class="form__input" required="" type="text"/>
+<input class="form__input" type="text" name="Име и презиме" required>
 </div>
+
 <div class="form__row">
 <label class="form__label">Email</label>
-<input class="form__input" required="" type="email"/>
+<input class="form__input" type="email" name="Email" required>
 </div>
+
 <div class="form__row">
 <label class="form__label">Телефон</label>
-<input class="form__input" type="text"/>
+<input class="form__input" type="text" name="Телефон">
 </div>
+
 <div class="form__row">
 <label class="form__label">Организација</label>
-<input class="form__input" type="text"/>
+<input class="form__input" type="text" name="Организација">
 </div>
+
 <div class="form__row">
 <label class="form__label">
-<input required="" type="checkbox"/>
-                     <span>Се согласувам со условите за членство.</span>
+<input type="checkbox" name="Согласност" required>
+<span>Се согласувам со условите за членство.</span>
 </label>
 </div>
-<button class="btn btn--primary" type="submit">Испрати пријава</button>
+
+<button class="btn btn--primary" type="submit">
+Испрати пријава
+</button>
+
 </form>
 </div>
+
 <!-- CORPORATE MEMBERSHIP -->
 <div class="card reveal-up reveal-delay-2">
 <h2 class="card__title">Корпоративно членство</h2>
-<p class="card__body">Корпоративното членство им овозможува на организациите да ги вклучат своите HR тимови и менаџмент во активностите на МАЧР.</p>
-<div class="table-wrapper" style="margin-bottom: 1rem">
+<p class="card__body">
+Корпоративното членство им овозможува на организациите да ги вклучат своите HR тимови и менаџмент во активностите на МАЧР.
+</p>
+
+<div class="table-wrapper" style="margin-bottom:1rem">
 <table class="table">
 <thead>
 <tr>
@@ -124,38 +141,53 @@
 </tbody>
 </table>
 </div>
-<form class="form" data-demo-form="" data-demo-message="Corporate membership (demo)">
+
+<form class="form"
+      data-mail-form
+      data-mail-subject="Корпоративно членство – барање">
+
 <div class="form__row">
 <label class="form__label">Име на организација</label>
-<input class="form__input" required="" type="text"/>
+<input class="form__input" type="text" name="Организација" required>
 </div>
+
 <div class="form__row">
 <label class="form__label">Контакт лице</label>
-<input class="form__input" required="" type="text"/>
+<input class="form__input" type="text" name="Контакт лице" required>
 </div>
+
 <div class="form__row">
 <label class="form__label">Email</label>
-<input class="form__input" required="" type="email"/>
+<input class="form__input" type="email" name="Email" required>
 </div>
+
 <div class="form__row">
 <label class="form__label">Телефон</label>
-<input class="form__input" type="text"/>
+<input class="form__input" type="text" name="Телефон">
 </div>
+
 <div class="form__row">
 <label class="form__label">Изберете пакет</label>
-<select class="form__select">
+<select class="form__select" name="Пакет">
 <option>Basic</option>
 <option>Standard</option>
 <option>Premium</option>
 </select>
 </div>
-<button class="btn btn--primary" type="submit">Испрати барање</button>
+
+<button class="btn btn--primary" type="submit">
+Испрати барање
+</button>
+
 </form>
 </div>
+
 </div>
 </div>
 </section>
 </main>
+
+
 <!-- FOOTER -->
 <footer class="footer">
 <div class="footer__inner">

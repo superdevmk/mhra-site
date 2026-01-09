@@ -13,10 +13,12 @@
 <header class="header">
 <div class="nav-wrapper">
 <div class="nav">
+<!-- BRAND -->
 <a class="nav__brand" href="index.html">
 <img alt="MHRA Logo" class="nav__logo-img" src="../assets/img/mhra_logo.jpg"/>
 </a>
 <nav class="nav__menu">
+<!-- NAV LINKS -->
 <div class="nav__links">
 <a class="nav__link" href="index.html">Почетна</a>
 <!-- За нас  → Информативни содржини -->
@@ -32,17 +34,21 @@
 <!-- Членство e heqim nga menu, e ke si buton "Стани член" -->
 <a class="nav__link" href="contact.html">Контакт</a>
 </div>
-<div class="nav__lang"><a class="nav__lang-btn nav__lang-btn--active" href="about.html">MK</a> | <a class="nav__lang-btn" href="../en/about.html">EN</a></div>
+<!-- LANGUAGE SWITCH -->
+<div class="nav__lang"><a class="nav__lang-btn nav__lang-btn--active" href="index.html">MK</a> | <a class="nav__lang-btn" href="../en/index.html">EN</a></div>
+<!-- CTA -->
 <div class="nav__cta">
 <a class="btn btn--primary" href="membership.html">Стани член</a>
 </div>
 </nav>
-<button aria-label="Отвори мени" class="nav__toggle">
+<button aria-label="Menu" class="nav__toggle">
 <span class="nav__toggle-bar"></span>
 </button>
 </div>
 </div>
 </header>
+
+
 <!-- MAIN -->
 <main>
 <!-- INTRO + IMAGE -->
@@ -84,6 +90,22 @@
 <div class="section-break reveal-up">
 <img alt="" src="../assets/img/section_break.png"/>
 </div>
+
+<!-- INFORMATIVE POSTS – FULL LIST (MK) -->
+<section class="section">
+  <div class="section-shell section-shell--compact">
+    <div class="section__header reveal-up">
+      <h2 class="section__title">Новости</h2>
+      <p class="section__subtitle">
+        Информации за тековни активности и соопштенија.
+      </p>
+    </div>
+    <div class="grid grid--3" data-info-list-page></div>
+  </div>
+</section>
+
+
+
 <!-- OBJECTIVES -->
 <section class="section">
 <div class="section-shell">
@@ -266,11 +288,41 @@
 </div>
 </div>
 </footer>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="../assets/js/infoPublic.js"></script>
+<script src="../assets/js/supabaseClient.js"></script>
+
 <script src="../assets/js/main.js"></script>
 
 <script>
       document.getElementById("year-about-mk").textContent =
         new Date().getFullYear();
     </script>
+
+<!-- INFORMATIVE POST MODAL -->
+<div class="info-modal" id="info-modal" aria-hidden="true">
+  <div class="info-modal__backdrop" data-info-modal-close></div>
+  <div class="info-modal__dialog">
+    <button class="info-modal__close" type="button" data-info-modal-close>&times;</button>
+
+    <div class="info-modal__gallery" data-has-images="false">
+      <button class="info-modal__arrow info-modal__arrow--left"
+              type="button" data-info-prev>&lsaquo;</button>
+      <div class="info-modal__viewport">
+        <div class="info-modal__track" id="info-modal-track"></div>
+      </div>
+      <button class="info-modal__arrow info-modal__arrow--right"
+              type="button" data-info-next>&rsaquo;</button>
+    </div>
+
+    <div class="info-modal__content">
+      <h2 class="info-modal__title" id="info-modal-title"></h2>
+      <p class="info-modal__subtitle" id="info-modal-subtitle"></p>
+      <div class="info-modal__body" id="info-modal-body"></div>
+    </div>
+  </div>
+</div>
+
+
 </body>
 </html>

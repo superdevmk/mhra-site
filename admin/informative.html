@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="mk">
+<head>
+  <meta charset="UTF-8" />
+  <title>Informative content admin</title>
+  <link rel="stylesheet" href="../assets/css/style.css" />
+</head>
+<body class="admin-page">
+  <main class="section">
+    <div class="section-shell section-shell--compact">
+      <h1>Admin – Informative Content (News & Announcements)</h1>
+
+      <!-- CREATE POST FORM -->
+      <form id="info-form" class="form form--stack">
+        <div class="form__field">
+          <label>Language</label>
+          <select name="language" required>
+            <option value="mk">MK</option>
+            <option value="en">EN</option>
+          </select>
+        </div>
+
+        <div class="form__field">
+          <label>Title</label>
+          <input type="text" name="title" required />
+        </div>
+
+        <div class="form__field">
+          <label>Subtitle</label>
+          <input type="text" name="subtitle" />
+        </div>
+
+        <div class="form__field">
+          <label>Body</label>
+          <textarea name="body" rows="8" required></textarea>
+        </div>
+
+        <div class="form__field">
+          <label>Files (images / docs)</label>
+          <input
+            type="file"
+            name="files"
+            id="info-files"
+            multiple
+          />
+          <small>Mund të zgjedhësh disa file njëherësh.</small>
+        </div>
+
+        <div class="form__field form__field--inline">
+          <label>
+            <input type="checkbox" name="published" checked />
+            Published
+          </label>
+        </div>
+
+        <button type="submit" class="btn btn--primary">
+          Save post
+        </button>
+      </form>
+
+      <hr class="section-divider" />
+
+      <!-- LIST OF POSTS -->
+      <div>
+        <h2 class="section__title">Existing posts</h2>
+
+        <div class="form__field">
+          <label>Filter by language</label>
+          <select id="info-language-filter">
+            <option value="mk">MK</option>
+            <option value="en">EN</option>
+          </select>
+        </div>
+
+        <table class="table" id="info-table">
+          <thead>
+            <tr>
+              <th>Title</th>
+              <th>Lang</th>
+              <th>Created</th>
+            </tr>
+          </thead>
+          <tbody></tbody>
+        </table>
+      </div>
+    </div>
+  </main>
+
+<!-- Supabase JS (CDN) -->
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+<!-- Supabase client + auth + informative admin -->
+<script src="../assets/js/supabaseClient.js"></script>
+<script src="../assets/js/auth.js"></script>
+<script src="../assets/js/infoAdmin.js"></script>
+
+</body>
+</html>
