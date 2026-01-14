@@ -49,7 +49,7 @@ document.addEventListener("DOMContentLoaded", () => {
   const all = [...logos, ...logos];
 
   track.innerHTML = all.map(name => `
-  <div class="event-pill sponsor-pill">
+  <div class="sponsor-pill">
     <img class="sponsor-img" src="../assets/img/sponsors/${name}" alt="" loading="lazy">
   </div>
 `).join("");
