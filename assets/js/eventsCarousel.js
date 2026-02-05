@@ -28,29 +28,31 @@
     return (lang === "mk" ? mk : en)[d.getMonth()] || "";
   }
 
-  function pillHtml({ href, bg, type, title, month, day, isPlaceholder }) {
-    const overlay = isPlaceholder
-      ? ""
-      : `
-        <div class="event-pill__overlay">
-          <div class="event-pill__info">
-            ${type ? `<div class="event-pill__type">${type}</div>` : ""}
-            ${title ? `<div class="event-pill__title">${title}</div>` : ""}
-          </div>
-          <div class="event-pill__date">
-            <span class="event-pill__month">${month}</span>
-            <span class="event-pill__day">${day}</span>
-          </div>
-        </div>
-      `;
-
+ function pillHtml({ href, bg, title, month, day, isPlaceholder }) {
+  if (isPlaceholder) {
     return `
-      <a href="${href}" class="event-pill ${isPlaceholder ? "event-pill--empty" : ""}">
-        <div class="event-pill__bg" style="background-image:url('${bg}')"></div>
-        ${overlay}
+      <a href="${href}" class="event-pill">
+        <img class="event-pill__img" src="${bg}" alt="" loading="lazy">
       </a>
     `;
   }
+
+  return `
+    <a href="${href}" class="event-pill">
+      <img class="event-pill__img" src="${bg}" alt="" loading="lazy">
+
+      <div class="event-pill__overlay">
+        ${title ? `<div class="event-pill__title">${title}</div>` : ""}
+
+        <div class="event-pill__date">
+          <span class="event-pill__month">${month}</span>
+          <span class="event-pill__day">${day}</span>
+        </div>
+      </div>
+    </a>
+  `;
+}
+
 
   async function load() {
     const track = document.querySelector(TRACK_SELECTOR);
