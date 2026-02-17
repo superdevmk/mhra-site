@@ -1,5 +1,5 @@
 /* assets/js/contentPublic.js
-   Public loader + modal for: yearly_conferences + hr_events
+   Public loader + modal for: yearly_conferences + hr_events (+ yearly home section)
    Requires:
    - <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
    - ../assets/js/supabaseClient.js  (must expose: supabaseClient)
@@ -35,6 +35,7 @@ function pickDate(post, lang) {
 }
 
 const modalState = { posts: [], current: null, idx: 0 };
+let modalBoundOnce = false;
 
 function renderContentCard(post, lang) {
   const btnLabel = lang === "mk" ? "Види повеќе" : "Read more";
@@ -47,11 +48,11 @@ function renderContentCard(post, lang) {
       : "";
 
   return `
-    <article style="background:#fff;border:1px solid #e5e7eb;border-radius:20px;padding:16px;box-shadow:0 10px 30px rgba(0,0,0,.06)">
+    <article style="background:#fff;border:1px solid #e5e7eb;border-radius:20px;padding:16px;box-shadow:0 10px 30px rgba(0,0,0,.06); overflow:hidden;">
       ${img}
       <div style="margin-top:12px;color:#6b7280;font-size:12px">${meta}</div>
-      <h3 style="margin:8px 0 6px;font-size:18px">${post.title || ""}</h3>
-      ${post.subtitle ? `<div style="color:#6b7280;margin-bottom:10px">${post.subtitle}</div>` : ""}
+      <h3 style="margin:8px 0 6px;font-size:18px; word-wrap:break-word; overflow-wrap:anywhere;">${post.title || ""}</h3>
+      ${post.subtitle ? `<div style="color:#6b7280;margin-bottom:10px; word-wrap:break-word; overflow-wrap:anywhere;">${post.subtitle}</div>` : ""}
       <button class="btn btn--outline js-open-modal" data-id="${post.id}" type="button">${btnLabel}</button>
     </article>
   `;
@@ -82,10 +83,7 @@ function openModal(post) {
     if (images.length) {
       gallery.dataset.hasImages = "true";
       track.innerHTML = images
-        .map(
-          (url) =>
-            `<div class="info-modal__slide"><img src="${url}" alt="" loading="lazy"></div>`
-        )
+        .map((url) => `<div class="info-modal__slide"><img src="${url}" alt="" loading="lazy"></div>`)
         .join("");
 
       const showArrows = images.length > 1;
@@ -129,13 +127,20 @@ function prevImg() {
 }
 
 function bindContentModal(posts) {
-  modalState.posts = posts || [];
+  // merge posts (so you can open items from multiple sections)
+  const incoming = posts || [];
+  const map = new Map((modalState.posts || []).map(p => [Number(p.id), p]));
+  incoming.forEach(p => map.set(Number(p.id), p));
+  modalState.posts = Array.from(map.values());
+
+  if (modalBoundOnce) return;
+  modalBoundOnce = true;
 
   document.addEventListener("click", (e) => {
     const btn = e.target.closest(".js-open-modal");
     if (!btn) return;
     const id = Number(btn.dataset.id);
-    const post = modalState.posts.find((p) => Number(p.id) === id);
+    const post = (modalState.posts || []).find((p) => Number(p.id) === id);
     if (post) openModal(post);
   });
 
@@ -143,10 +148,7 @@ function bindContentModal(posts) {
   if (!modal) return;
 
   modal.addEventListener("click", (e) => {
-    if (
-      e.target.matches("[data-info-modal-close]") ||
-      e.target.classList.contains("info-modal__backdrop")
-    ) {
+    if (e.target.matches("[data-info-modal-close]") || e.target.classList.contains("info-modal__backdrop")) {
       closeModal();
     }
   });
@@ -161,30 +163,42 @@ function bindContentModal(posts) {
   });
 }
 
-async function loadSection(table, selector) {
+async function loadSection(table, selector, opts = {}) {
   const container = document.querySelector(selector);
   if (!container) return;
 
   const lang = getLang();
+  const limit = opts.limit || null;
 
-  const { data, error } = await supabaseClient
+  let q = supabaseClient
     .from(table)
     .select("*")
     .eq("language", lang)
-    .eq("published", true)
-    .order("created_at", { ascending: false });
+    .eq("published", true);
+
+  // ordering: use event_date if exists, otherwise created_at
+  q = q.order("event_date", { ascending: false, nullsFirst: false })
+       .order("created_at", { ascending: false });
+
+  if (limit) q = q.limit(limit);
+
+  const { data, error } = await q;
 
   if (error) {
     console.error("Load error:", table, error);
     return;
   }
 
-  container.innerHTML = (data || []).map((p) => renderContentCard(p, lang)).join("");
-  bindContentModal(data || []);
+  const rows = data || [];
+  container.innerHTML = rows.map((p) => renderContentCard(p, lang)).join("");
+  bindContentModal(rows);
 }
 
 document.addEventListener("DOMContentLoaded", () => {
-  // only runs where containers exist
+  // Page sections (only where containers exist)
   loadSection("yearly_conferences", "[data-yearly-conferences]");
   loadSection("hr_events", "[data-hr-events]");
+
+  // Home section (only where container exists)
+  loadSection("yearly_conferences", "[data-yearly-home]", { limit: 6 });
 });
