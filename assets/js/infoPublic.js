@@ -181,7 +181,7 @@ document.addEventListener("DOMContentLoaded", async () => {
   infoState.posts = posts;
 
   if (homeContainer) {
-    const homePosts = posts.slice(0, 3);
+    const homePosts = posts.slice(0, 12);
     homeContainer.innerHTML = homePosts
       .map((p) => renderInfoCard(p, lang))
       .join("");

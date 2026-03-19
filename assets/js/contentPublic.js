@@ -200,5 +200,5 @@ document.addEventListener("DOMContentLoaded", () => {
   loadSection("hr_events", "[data-hr-events]");
 
   // Home section (only where container exists)
-  loadSection("yearly_conferences", "[data-yearly-home]", { limit: 6 });
+  loadSection("yearly_conferences", "[data-yearly-home]", { limit: 20 });
 });
