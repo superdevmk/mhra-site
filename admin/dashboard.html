@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="mk">
+<head>
+  <meta charset="utf-8" />
+  <title>MHRA Admin Dashboard</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <link href="../assets/css/style.css" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+</head>
+
+<body>
+  <!-- HEADER -->
+  <header class="header">
+    <div class="nav-wrapper">
+      <div class="nav">
+
+        <a class="nav__brand" href="../mk/index.html">
+          <img src="../assets/img/mhra_logo.jpg" alt="MHRA Logo" class="nav__logo-img" />
+        </a>
+
+        <nav class="nav__menu">
+          <div class="nav__links">
+            <a href="../mk/index.html" class="nav__link">Почетна</a>
+            <a href="../mk/about.html" class="nav__link">Информативни содржини</a>
+            <a href="../mk/activities.html" class="nav__link">Едукативни содржини</a>
+            <a href="../mk/galleries.html" class="nav__link">Годишна конференција</a>
+            <a href="../mk/events.html" class="nav__link">HR настани</a>
+            <a href="../mk/blog.html" class="nav__link">Блог</a>
+            <a href="../mk/contact.html" class="nav__link">Контакт</a>
+          </div>
+
+          <div class="nav__cta">
+            <a href="../mk/membership.html" class="btn btn--primary">Стани член</a>
+          </div>
+        </nav>
+
+        <button class="nav__toggle" aria-label="Menu">
+          <span class="nav__toggle-bar"></span>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- ADMIN DASHBOARD -->
+  <main>
+    <section class="section">
+      <div class="section-shell section-shell--compact">
+
+        <div class="section__header">
+          <h1 class="section__title">Admin Dashboard</h1>
+          <p class="section__subtitle">Управување со содржини на платформата.</p>
+        </div>
+
+        <div style="
+          display:grid;
+          grid-template-columns:repeat(auto-fit, minmax(260px, 1fr));
+          gap:1.5rem;
+          margin-top:2rem;
+        ">
+          <a href="./informative.html" class="btn btn--primary" style="padding:1.5rem; text-align:center; line-height:1.5;">
+           Post za: <br> Информативни содржини / News &amp; Informative Content</small>
+          </a>
+
+          <a href="./events.html" class="btn btn--primary" style="padding:1.5rem; text-align:center; line-height:1.5;">
+          Post za: <br> HR Евенти / HR Events</small>
+          </a>
+
+          <a href="./conferences.html" class="btn btn--primary" style="padding:1.5rem; text-align:center; line-height:1.5;">
+          Post za: <br>  Годишна конференција / Yearly Conferences</small>
+          </a>
+        </div>
+
+      </div>
+    </section>
+  </main>
+
+  <!-- FOOTER -->
+  <footer class="footer">
+    <div class="footer__inner">
+      <div class="footer__top">
+        <div>
+          <div class="footer__brand">Македонска асоцијација за човечки ресурси (МАЧР)</div>
+          <p>Платформа за развој и поврзување на HR професионалци и организации.</p>
+        </div>
+
+        <div>
+          <p><strong>Контакт</strong></p>
+          <p>Адреса: Бул. ВМРО бр. 7/1-7 1000 Скопје, Македонија</p>
+          <p>Email: contact@mhra.mk</p>
+        </div>
+
+        <div>
+          <p><strong>Линкови</strong></p>
+          <div class="footer__links">
+            <a href="../mk/index.html">Почетна</a>
+            <a href="../mk/membership.html">Членство</a>
+            <a href="../mk/contact.html">Контакт</a>
+          </div>
+        </div>
+      </div>
+
+      <div class="footer__bottom">
+        © <span id="year-admin"></span> MHRA ·
+        <span>All rights reserved.</span>
+      </div>
+    </div>
+  </footer>
+
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="../assets/js/supabaseClient.js"></script>
+  <script src="../assets/js/main.js"></script>
+
+  <script>
+    document.getElementById("year-admin").textContent = new Date().getFullYear();
+
+    // optional: require Supabase login
+    (async function () {
+      if (typeof supabaseClient === "undefined") return;
+      const { data } = await supabaseClient.auth.getSession();
+      if (!data?.session) {
+        window.location.href = "../mk/login.html";
+      }
+    })();
+  </script>
+</body>
+</html>
