@@ -253,76 +253,16 @@
 </div>
 </footer>
 
-<!-- JS PËR MODAL-IN -->
 <script>
-      (function () {
-        const openButtons = document.querySelectorAll("[data-modal-target]");
-        const modals = document.querySelectorAll(".modal");
-
-        function openModal(id) {
-          const modal = document.getElementById(id);
-          if (!modal) return;
-          modal.classList.add("modal--open");
-        }
-
-        function closeModal(modal) {
-          modal.classList.remove("modal--open");
-        }
-
-        openButtons.forEach((btn) => {
-          btn.addEventListener("click", () => {
-            const id = btn.getAttribute("data-modal-target");
-            if (id) openModal(id);
-          });
-        });
-
-        modals.forEach((modal) => {
-          modal.addEventListener("click", (e) => {
-            if (e.target.hasAttribute("data-modal-close")) {
-              closeModal(modal);
-            }
-          });
-
-          document.addEventListener("keydown", (e) => {
-            if (e.key === "Escape" && modal.classList.contains("modal--open")) {
-              closeModal(modal);
-            }
-          });
-        });
-
-        document.getElementById("year-events").textContent =
-          new Date().getFullYear();
-      })();
-    </script>
-
-
-
-<div class="info-modal" id="content-modal" aria-hidden="true">
-  <div class="info-modal__backdrop" data-info-modal-close></div>
-  <div class="info-modal__dialog">
-    <button class="info-modal__close" type="button" data-info-modal-close>&times;</button>
-
-    <div class="info-modal__gallery" data-has-images="false">
-      <button class="info-modal__arrow info-modal__arrow--left" type="button" data-info-prev>&lsaquo;</button>
-      <div class="info-modal__viewport">
-        <div class="info-modal__track" id="info-modal-track"></div>
-      </div>
-      <button class="info-modal__arrow info-modal__arrow--right" type="button" data-info-next>&rsaquo;</button>
-    </div>
-
-    <div class="info-modal__content">
-      <h2 class="info-modal__title" id="content-modal-title"></h2>
-      <p class="info-modal__subtitle" id="content-modal-subtitle"></p>
-      <div class="info-modal__body" id="content-modal-body"></div>
-    </div>
-  </div>
-</div>
-
-
+  document.getElementById("year-events").textContent = new Date().getFullYear();
+</script>
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-<script src="/assets/js/supabaseClient.js"></script>
-<script src="/assets/js/contentPublic.js"></script>
-<script src="/assets/js/main.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/dompurify@3.2.4/dist/purify.min.js"></script>
+<script src="../assets/js/supabaseClient.js"></script>
+<script src="../assets/js/utils.js"></script>
+<script src="../assets/js/renderContent.js"></script>
+<script src="../assets/js/contentPublic.js"></script>
+<script src="../assets/js/main.js"></script>
 
 
 

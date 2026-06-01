@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>MHRA Admin Login</title>
+  <link href="../assets/css/style.css" rel="stylesheet" />
+</head>
+<body class="admin-page">
+  <main class="section section--center">
+    <div class="section-shell" style="max-width:420px;margin:0 auto;">
+      <h1 class="section__title">MHRA Admin</h1>
+      <p class="section__subtitle" id="login-subtitle">Staff login only</p>
+      <form id="admin-login-form" class="form form--stack card" style="padding:1.25rem;">
+        <div class="form__field">
+          <label>Email</label>
+          <input type="email" id="email" required autocomplete="username" />
+        </div>
+        <div class="form__field">
+          <label>Password</label>
+          <input type="password" id="password" required autocomplete="current-password" />
+        </div>
+        <p id="login-status" class="section__subtitle"></p>
+        <button type="submit" class="btn btn--primary">Sign in</button>
+        <a href="../mk/index.html" class="btn btn--outline" style="margin-top:.5rem;text-align:center;">Back to site</a>
+      </form>
+    </div>
+  </main>
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="../assets/js/supabaseClient.js"></script>
+  <script src="../assets/js/auth.js"></script>
+  <script>
+    if (new URLSearchParams(location.search).get("denied") === "1") {
+      document.getElementById("login-subtitle").textContent = "Access denied. Admin account required.";
+    }
+    document.getElementById("admin-login-form").addEventListener("submit", async (e) => {
+      e.preventDefault();
+      const status = document.getElementById("login-status");
+      try {
+        await signIn(document.getElementById("email").value.trim(), document.getElementById("password").value);
+        const admin = await isAdminUser();
+        if (!admin) {
+          await signOut();
+          status.textContent = "This account is not an admin.";
+          status.style.color = "crimson";
+          return;
+        }
+        window.location.href = "dashboard.html";
+      } catch (err) {
+        status.textContent = err.message;
+        status.style.color = "crimson";
+      }
+    });
+  </script>
+</body>
+</html>

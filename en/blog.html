@@ -7,9 +7,9 @@
 <meta content="width=device-width, initial-scale=1" name="viewport"/>
 <link href="../assets/css/style.css" rel="stylesheet"/>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&amp;display=swap" rel="stylesheet"/>
+<link href="https://cdn.jsdelivr.net/npm/quill@2.0.2/dist/quill.snow.css" rel="stylesheet"/>
 </head>
 <body>
-<!-- HEADER -->
 <header class="header">
 <div class="nav-wrapper">
 <div class="nav">
@@ -19,17 +19,11 @@
 <nav class="nav__menu">
 <div class="nav__links">
 <a class="nav__link" href="index.html">Home</a>
-<!-- За нас  → Информативни содржини -->
 <a class="nav__link" href="about.html">Informative content</a>
-<!-- Активности → Едукативни содржини -->
 <a class="nav__link" href="activities.html">Educational content</a>
-<!-- Галерии → Годишна конференција -->
 <a class="nav__link" href="galleries.html">Yearly Conferences</a>
-<!-- HR настани – останува исто -->
 <a class="nav__link" href="events.html">HR Events</a>
-<!-- Блог – останува исто -->
-<a class="nav__link" href="blog.html">Blog</a>
-<!-- Членство e heqim nga menu, e ke si buton "Стани член" -->
+<a class="nav__link nav__link--active" href="blog.html">Blog</a>
 <a class="nav__link" href="contact.html">Contact</a>
 </div>
 <div class="nav__lang"><a class="nav__lang-btn" href="../mk/blog.html">MK</a> | <a class="nav__lang-btn nav__lang-btn--active" href="blog.html">EN</a></div>
@@ -43,7 +37,6 @@
 </div>
 </div>
 </header>
-<!-- BANNER BLOG -->
 <section class="section">
 <div class="blog-banner reveal-up">
 <img alt="HR Blog Banner" class="blog-banner__img" src="../assets/img/about-banner.png"/>
@@ -52,48 +45,36 @@
 <main>
 <section class="section">
 <div class="section-shell section-shell--hero">
-<!-- HEADER BLOG -->
 <div class="section__header blog__header reveal-up">
 <div>
 <h1 class="section__title">Blog</h1>
 <p class="section__subtitle">Articles, analysis and announcements from the HR field.</p>
 </div>
-<!-- Копче за автори (login/logout) -->
-<a class="btn btn--outline" href="login.html" id="author-btn">
-              Најава за автор
-            </a>
+<a class="btn btn--outline" href="login.html" id="author-btn">Log in</a>
 </div>
-<!-- CREATE POST (само кога е најавен корисникот) -->
 <section class="blog-create reveal-up reveal-delay-1" id="create-post-section" style="display: none; margin: 1rem 0 1.5rem 0;">
-<div class="card" style="padding: 1rem;">
-<h2 style="margin: 0 0 .75rem 0;">Креирај нов блог</h2>
+<div class="card blog-editor-card">
+<h2>Create a new post</h2>
 <form class="blog-form" id="create-post-form">
 <div class="form-group">
-<label class="form__label" for="post-title">Наслов</label>
-<input class="input" id="post-title" placeholder="Внеси наслов..." required="" type="text"/>
+<label class="form__label" for="post-title">Title</label>
+<input class="input" id="post-title" required type="text"/>
 </div>
-<div class="form-group" style="margin-top:.75rem;">
-<label class="form__label" for="post-image">
-                    Слика (опционално)
-                  </label>
+<div class="form-group">
+<label class="form__label" for="post-image">Cover image (optional)</label>
 <input accept="image/*" class="input" id="post-image" type="file"/>
 </div>
-<div class="form-group" style="margin-top:.75rem;">
-<label class="form__label" for="post-body">
-                    Содржина
-                  </label>
-<textarea class="input" id="post-body" placeholder="Напиши содржина (поддржан е Markdown)..." required="" style="min-height: 160px;"></textarea>
+<div class="form-group">
+<label class="form__label">Content</label>
+<div id="blog-editor" class="rich-editor"></div>
+<input type="hidden" id="post-body-html"/>
 </div>
-<p class="section__subtitle" id="create-post-status" style="margin-top:.75rem;"></p>
-<div style="display:flex; gap:.5rem; margin-top: 1rem; flex-wrap: wrap;">
-<button class="btn btn--primary" type="submit">
-                    Објави блог
-                  </button>
-</div>
+<p class="section__subtitle" id="create-post-status"></p>
+<button class="btn btn--primary" type="submit">Publish post</button>
 </form>
 </div>
 </section>
-<!-- BLOG LIST GRID -->
+<div id="edit-post-section" style="display:none;"></div>
 <section class="blog-list reveal-up reveal-delay-2">
 <div class="section__subtitle" id="blog-empty" style="margin-top: 1rem; display: none">There are no blog posts yet.</div>
 <div class="grid grid--3" id="blog-grid"></div>
@@ -101,29 +82,6 @@
 </div>
 </section>
 </main>
-<!-- BLOG MODAL (POPUP) -->
-<div aria-hidden="true" class="blog-modal" id="blog-modal">
-<div class="blog-modal__backdrop"></div>
-<div class="blog-modal__content blog-modal__dialog">
-<button aria-label="Close" class="blog-modal__close" type="button">
-          ×
-        </button>
-<h2 id="blog-modal-title"></h2>
-<div class="blog-modal__meta">
-<span id="blog-modal-author"></span>
-<span id="blog-modal-date"></span>
-</div>
-<!-- Слика во модал (ако има) -->
-<img alt="" class="blog-modal__image" id="blog-modal-image" style="display:none; max-width:100%; height:auto; margin: 1rem 0;"/>
-<div class="blog-modal__body" id="blog-modal-body"></div>
-<div class="blog-modal__actions" style="margin-top:1rem;">
-<button class="btn btn--danger" id="blog-modal-delete" style="display:none;" type="button">
-            Избриши блог
-          </button>
-</div>
-</div>
-</div>
-<!-- FOOTER -->
 <footer class="footer">
 <div class="footer__inner">
 <div class="footer__top">
@@ -134,9 +92,9 @@
 <div>
 <p><strong>Contact</strong></p>
 <p>
-              Адреса: Македонска асоцијација за човечки ресурси<br/>
-              Бул. ВМРО бр. 7/1-7<br/>
-              1000 Скопје, Македонија
+              Macedonian Human Resources Association<br/>
+              Blvd. VMRO no. 7/1-7<br/>
+              1000 Skopje, North Macedonia
             </p>
 <p>Email: contact@mhra.mk</p>
 </div>
@@ -152,24 +110,24 @@
 </div>
 </div>
 <div class="footer__bottom">
-          © <span id="year-blog-mk"></span> MHRA ·
+          © <span id="year-blog-en"></span> MHRA ·
           <span>All rights reserved.</span>
 </div>
 </div>
 </footer>
 <script>
-      document.getElementById("year-blog-mk").textContent =
-        new Date().getFullYear();
-    </script>
-<!-- Skriptet ekzistuese -->
+  document.getElementById("year-blog-en").textContent = new Date().getFullYear();
+</script>
 <script src="../assets/js/main.js"></script>
-<!-- Supabase (CDN + klienti + auth + posts) -->
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="https://cdn.jsdelivr.net/npm/dompurify@3.2.4/dist/purify.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/quill@2.0.2/dist/quill.js"></script>
 <script src="../assets/js/supabaseClient.js"></script>
+<script src="../assets/js/utils.js"></script>
+<script src="../assets/js/renderContent.js"></script>
 <script src="../assets/js/auth.js"></script>
+<script src="../assets/js/richEditor.js"></script>
 <script src="../assets/js/posts.js"></script>
-<!-- Markdown + blog logjika -->
-<script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
 <script src="../assets/js/blog.js"></script>
 </body>
 </html>

@@ -19,6 +19,10 @@ function setupMobileNav() {
   toggle.addEventListener("click", () => {
     menu.classList.toggle("nav__menu--open");
   });
+
+  menu.querySelectorAll("a").forEach((link) => {
+    link.addEventListener("click", () => menu.classList.remove("nav__menu--open"));
+  });
 }
 
 /**

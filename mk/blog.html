@@ -7,6 +7,7 @@
 <meta content="width=device-width, initial-scale=1" name="viewport"/>
 <link href="../assets/css/style.css" rel="stylesheet"/>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&amp;display=swap" rel="stylesheet"/>
+<link href="https://cdn.jsdelivr.net/npm/quill@2.0.2/dist/quill.snow.css" rel="stylesheet"/>
 </head>
 <body>
 <!-- HEADER -->
@@ -70,34 +71,28 @@
 </div>
 <!-- CREATE POST (само кога е најавен корисникот) -->
 <section class="blog-create reveal-up reveal-delay-1" id="create-post-section" style="display: none; margin: 1rem 0 1.5rem 0;">
-<div class="card" style="padding: 1rem;">
-<h2 style="margin: 0 0 .75rem 0;">Креирај нов блог</h2>
+<div class="card blog-editor-card">
+<h2>Креирај нов блог</h2>
 <form class="blog-form" id="create-post-form">
 <div class="form-group">
 <label class="form__label" for="post-title">Наслов</label>
-<input class="input" id="post-title" placeholder="Внеси наслов..." required="" type="text"/>
+<input class="input" id="post-title" required type="text"/>
 </div>
-<div class="form-group" style="margin-top:.75rem;">
-<label class="form__label" for="post-image">
-                    Слика (опционално)
-                  </label>
+<div class="form-group">
+<label class="form__label" for="post-image">Насловна слика (опционално)</label>
 <input accept="image/*" class="input" id="post-image" type="file"/>
 </div>
-<div class="form-group" style="margin-top:.75rem;">
-<label class="form__label" for="post-body">
-                    Содржина
-                  </label>
-<textarea class="input" id="post-body" placeholder="Напиши содржина (поддржан е Markdown)..." required="" style="min-height: 160px;"></textarea>
+<div class="form-group">
+<label class="form__label">Содржина</label>
+<div id="blog-editor" class="rich-editor"></div>
+<input type="hidden" id="post-body-html"/>
 </div>
-<p class="section__subtitle" id="create-post-status" style="margin-top:.75rem;"></p>
-<div style="display:flex; gap:.5rem; margin-top: 1rem; flex-wrap: wrap;">
-<button class="btn btn--primary" type="submit">
-                    Објави блог
-                  </button>
-</div>
+<p class="section__subtitle" id="create-post-status"></p>
+<button class="btn btn--primary" type="submit">Објави блог</button>
 </form>
 </div>
 </section>
+<div id="edit-post-section" style="display:none;"></div>
 <!-- BLOG LIST GRID -->
 <section class="blog-list reveal-up reveal-delay-2">
 <div class="section__subtitle" id="blog-empty" style="margin-top: 1rem; display: none">Во моментов нема објавени блог текстови.</div>
@@ -106,28 +101,6 @@
 </div>
 </section>
 </main>
-<!-- BLOG MODAL (POPUP) -->
-<div aria-hidden="true" class="blog-modal" id="blog-modal">
-<div class="blog-modal__backdrop"></div>
-<div class="blog-modal__content blog-modal__dialog">
-<button aria-label="Close" class="blog-modal__close" type="button">
-          ×
-        </button>
-<h2 id="blog-modal-title"></h2>
-<div class="blog-modal__meta">
-<span id="blog-modal-author"></span>
-<span id="blog-modal-date"></span>
-</div>
-<!-- Слика во модал (ако има) -->
-<img alt="" class="blog-modal__image" id="blog-modal-image" style="display:none; max-width:100%; height:auto; margin: 1rem 0;"/>
-<div class="blog-modal__body" id="blog-modal-body"></div>
-<div class="blog-modal__actions" style="margin-top:1rem;">
-<button class="btn btn--danger" id="blog-modal-delete" style="display:none;" type="button">
-            Избриши блог
-          </button>
-</div>
-</div>
-</div>
 <!-- FOOTER -->
 <footer class="footer">
 <div class="footer__inner">
@@ -168,14 +141,15 @@
     </script>
 <!-- Skriptet ekzistuese -->
 <script src="../assets/js/main.js"></script>
-
-<!-- Supabase (CDN + klienti + auth + posts) -->
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="https://cdn.jsdelivr.net/npm/dompurify@3.2.4/dist/purify.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/quill@2.0.2/dist/quill.js"></script>
 <script src="../assets/js/supabaseClient.js"></script>
+<script src="../assets/js/utils.js"></script>
+<script src="../assets/js/renderContent.js"></script>
 <script src="../assets/js/auth.js"></script>
+<script src="../assets/js/richEditor.js"></script>
 <script src="../assets/js/posts.js"></script>
-<!-- Markdown + blog logjika -->
-<script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
 <script src="../assets/js/blog.js"></script>
 </body>
 </html>
