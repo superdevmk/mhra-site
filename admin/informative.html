@@ -12,6 +12,7 @@
     <div class="admin-header__inner">
       <a href="dashboard.html" class="admin-header__brand">MHRA Admin</a>
       <nav class="admin-header__nav">
+        <a href="dashboard.html">Dashboard</a>
         <a href="informative.html">Informative</a>
         <a href="events.html">Events</a>
         <a href="conferences.html">Conferences</a>
@@ -22,7 +23,11 @@
   <main class="section">
     <div class="section-shell section-shell--compact">
       <h1 class="section__title" id="admin-page-title">Informative content</h1>
-      <p class="section__subtitle" id="form-mode-label">Create new</p>
+      <p class="section__subtitle admin-workflow-hint">Fill the form to create, or click <strong>Edit</strong> in the list below. Always click <strong>Save changes</strong> when editing.</p>
+
+      <section class="admin-form-panel" id="admin-form-panel">
+        <h2 class="admin-form-panel__heading" id="admin-form-heading">Create new content</h2>
+        <p class="admin-form__mode" id="admin-form-mode" hidden></p>
 
       <form id="admin-form" class="form form--stack admin-form">
         <div class="form__row-grid">
@@ -53,13 +58,17 @@
         </div>
         <div class="form__field">
           <label>Gallery images</label>
+          <div id="admin-existing-images" hidden></div>
           <input type="file" id="admin-files" multiple accept="image/*" />
+          <p class="form__hint">First image is used as the cover on the public site. Upload adds to the gallery.</p>
         </div>
-        <div class="form__actions">
-          <button type="submit" class="btn btn--primary">Save</button>
-          <button type="button" class="btn btn--outline" id="admin-reset-btn">Reset</button>
+        <p class="admin-form-status" id="admin-form-status" aria-live="polite"></p>
+        <div class="form__actions admin-form__actions">
+          <button type="submit" class="btn btn--primary" id="admin-submit-btn">Create &amp; publish</button>
+          <button type="button" class="btn btn--outline" id="admin-reset-btn">Clear form</button>
         </div>
       </form>
+      </section>
 
       <hr class="section-divider" />
 

@@ -72,7 +72,8 @@
 <!-- CREATE POST (само кога е најавен корисникот) -->
 <section class="blog-create reveal-up reveal-delay-1" id="create-post-section" style="display: none; margin: 1rem 0 1.5rem 0;">
 <div class="card blog-editor-card">
-<h2>Креирај нов блог</h2>
+<h2 id="post-form-heading">Креирај нов блог</h2>
+<p class="blog-form__mode" id="edit-post-section" style="display:none;"></p>
 <form class="blog-form" id="create-post-form">
 <div class="form-group">
 <label class="form__label" for="post-title">Наслов</label>
@@ -88,11 +89,13 @@
 <input type="hidden" id="post-body-html"/>
 </div>
 <p class="section__subtitle" id="create-post-status"></p>
-<button class="btn btn--primary" type="submit">Објави блог</button>
+<div class="blog-form__actions">
+<button class="btn btn--primary" id="post-submit-btn" type="submit">Објави блог</button>
+<button class="btn btn--outline" id="post-cancel-edit-btn" style="display: none;" type="button">Откажи</button>
+</div>
 </form>
 </div>
 </section>
-<div id="edit-post-section" style="display:none;"></div>
 <!-- BLOG LIST GRID -->
 <section class="blog-list reveal-up reveal-delay-2">
 <div class="section__subtitle" id="blog-empty" style="margin-top: 1rem; display: none">Во моментов нема објавени блог текстови.</div>

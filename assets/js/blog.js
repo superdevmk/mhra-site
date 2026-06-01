@@ -8,6 +8,9 @@ const createBodyHidden = document.getElementById("post-body-html");
 const createImageInput = document.getElementById("post-image");
 const createStatusEl = document.getElementById("create-post-status");
 const editSection = document.getElementById("edit-post-section");
+const formHeadingEl = document.getElementById("post-form-heading");
+const submitBtnEl = document.getElementById("post-submit-btn");
+const cancelEditBtnEl = document.getElementById("post-cancel-edit-btn");
 
 let blogQuill = null;
 let currentUserId = null;
@@ -22,12 +25,47 @@ function t(key) {
     register: { mk: "Регистрација", en: "Sign up" },
     readMore: { mk: "Прочитај повеќе", en: "Read more" },
     edit: { mk: "Уреди", en: "Edit" },
+    publish: { mk: "Објави блог", en: "Publish post" },
+    saveEdit: { mk: "Зачувај промени", en: "Save changes" },
+    cancelEdit: { mk: "Откажи", en: "Cancel" },
+    createHeading: { mk: "Креирај нов блог", en: "Create a new post" },
+    editHeading: { mk: "Уреди блог", en: "Edit post" },
+    editingMode: { mk: "Режим на уредување", en: "Editing mode" },
     empty: { mk: "Нема објавени блогови.", en: "No blog posts yet." },
     error: { mk: "Грешка при вчитување.", en: "Failed to load posts." },
   };
   return map[key]?.[lang] || map[key]?.mk || key;
 }
 
+function setEditorModeUI(isEditing) {
+  if (formHeadingEl) {
+    formHeadingEl.textContent = isEditing ? t("editHeading") : t("createHeading");
+  }
+  if (submitBtnEl) {
+    submitBtnEl.textContent = isEditing ? t("saveEdit") : t("publish");
+  }
+  if (cancelEditBtnEl) {
+    cancelEditBtnEl.style.display = isEditing ? "inline-flex" : "none";
+    cancelEditBtnEl.textContent = t("cancelEdit");
+  }
+  if (editSection) {
+    editSection.style.display = isEditing ? "block" : "none";
+    editSection.textContent = isEditing ? t("editingMode") : "";
+  }
+}
+
+function cancelEdit() {
+  editingPostId = null;
+  if (createForm) createForm.reset();
+  if (blogQuill) setEditorHtml(blogQuill, "");
+  setEditorModeUI(false);
+  setStatus("", false);
+  if (window.history.replaceState) {
+    const url = new URL(window.location.href);
+    url.searchParams.delete("edit");
+    window.history.replaceState({}, "", url.pathname + url.search);
+  }
+}
 function setStatus(msg, isError) {
   if (!createStatusEl) return;
   createStatusEl.textContent = msg || "";
@@ -52,7 +90,7 @@ function updateAuthUI(session) {
     }
   }
   if (createSection) createSection.style.display = session ? "block" : "none";
-  if (editSection) editSection.style.display = "none";
+  if (!editingPostId) setEditorModeUI(false);
 }
 
 async function loadPosts() {
@@ -107,9 +145,9 @@ function startEditPost(id) {
   createTitleInput.value = post.title;
   setEditorHtml(blogQuill, post.body);
   if (createBodyHidden) createBodyHidden.value = post.body;
-  if (editSection) editSection.style.display = "block";
+  setEditorModeUI(true);
   createSection.scrollIntoView({ behavior: "smooth" });
-  setStatus(getPageLang() === "mk" ? "Режим на уредување" : "Editing mode", false);
+  setStatus(t("editingMode"), false);
 }
 
 async function handleCreateSubmit(e) {
@@ -128,12 +166,10 @@ async function handleCreateSubmit(e) {
   try {
     if (editingPostId) {
       await updatePost(editingPostId, { title, body, bodyFormat: "html", imageFile });
-      editingPostId = null;
     } else {
       await createPost({ title, body, bodyFormat: "html", language: getPageLang(), imageFile });
     }
-    createForm.reset();
-    setEditorHtml(blogQuill, "");
+    cancelEdit();
     setStatus(getPageLang() === "mk" ? "Зачувано." : "Saved.", false);
     await loadPosts();
   } catch (err) {
@@ -149,6 +185,9 @@ document.addEventListener("DOMContentLoaded", async () => {
   });
 
   if (createForm) createForm.addEventListener("submit", handleCreateSubmit);
+  if (cancelEditBtnEl) cancelEditBtnEl.addEventListener("click", cancelEdit);
+
+  setEditorModeUI(false);
 
   document.addEventListener("click", (ev) => {
     const editId = ev.target.getAttribute("data-blog-edit");

@@ -6,6 +6,82 @@
 
   let quill = null;
   let editingId = null;
+  let existingImages = [];
+
+  const formEl = () => document.getElementById("admin-form");
+  const statusEl = () => document.getElementById("admin-form-status");
+  const headingEl = () => document.getElementById("admin-form-heading");
+  const modeEl = () => document.getElementById("admin-form-mode");
+  const submitBtnEl = () => document.getElementById("admin-submit-btn");
+  const resetBtnEl = () => document.getElementById("admin-reset-btn");
+
+  function setStatus(msg, isError) {
+    const el = statusEl();
+    if (!el) return;
+    el.textContent = msg || "";
+    el.classList.toggle("admin-form-status--error", !!isError);
+    el.classList.toggle("admin-form-status--success", !!msg && !isError);
+  }
+
+  function setEditorModeUI(isEditing, itemTitle) {
+    if (headingEl()) {
+      headingEl().textContent = isEditing ? "Edit content" : "Create new content";
+    }
+    if (modeEl()) {
+      if (isEditing) {
+        modeEl().style.display = "block";
+        modeEl().hidden = false;
+        modeEl().textContent = itemTitle
+          ? `Editing: ${itemTitle}`
+          : editingId
+            ? `Editing item #${editingId}`
+            : "Editing";
+      } else {
+        modeEl().style.display = "none";
+        modeEl().hidden = true;
+        modeEl().textContent = "";
+      }
+    }
+    if (submitBtnEl()) {
+      submitBtnEl().textContent = isEditing ? "Save changes" : "Create & publish";
+    }
+    if (resetBtnEl()) {
+      resetBtnEl().textContent = isEditing ? "Cancel edit" : "Clear form";
+    }
+    document.getElementById("admin-form-panel")?.classList.toggle("admin-form-panel--editing", isEditing);
+  }
+
+  function highlightEditingRow(id) {
+    document.querySelectorAll("#admin-table tbody tr[data-row-id]").forEach((tr) => {
+      tr.classList.toggle("admin-table__row--editing", Number(tr.dataset.rowId) === Number(id));
+    });
+  }
+
+  function renderExistingImages() {
+    const el = document.getElementById("admin-existing-images");
+    if (!el) return;
+
+    if (!existingImages.length) {
+      el.innerHTML = "";
+      el.hidden = true;
+      return;
+    }
+
+    el.hidden = false;
+    el.innerHTML = `
+      <p class="admin-existing-images__label">Current gallery (${existingImages.length}) — upload below to add more</p>
+      <div class="admin-existing-images__grid">
+        ${existingImages
+          .map(
+            (url, index) => `
+          <figure class="admin-existing-images__item">
+            <img src="${escapeHtml(url)}" alt="" loading="lazy">
+            <button type="button" class="btn btn--outline btn--sm" data-remove-image="${index}">Remove</button>
+          </figure>`
+          )
+          .join("")}
+      </div>`;
+  }
 
   async function getCurrentUserId() {
     const { data, error } = await supabaseClient.auth.getUser();
@@ -43,36 +119,43 @@
     }
 
     if (!data.length) {
-      tbody.innerHTML = `<tr><td colspan="5">No posts yet.</td></tr>`;
+      tbody.innerHTML = `<tr><td colspan="5">No posts yet. Use the form above to create one.</td></tr>`;
+      highlightEditingRow(null);
       return;
     }
 
     tbody.innerHTML = data
       .map(
         (row) => `
-      <tr>
+      <tr data-row-id="${row.id}">
         <td>${escapeHtml(row.title)}</td>
         <td>${escapeHtml(row.language)}</td>
         <td>${row.published ? "Yes" : "Draft"}</td>
         <td>${formatContentDate(row.created_at, "en")}</td>
         <td class="admin-table__actions">
           <button type="button" class="btn btn--outline btn--sm" data-edit-id="${row.id}">Edit</button>
-          <button type="button" class="btn btn--outline btn--sm" data-delete-id="${row.id}">Delete</button>
+          <button type="button" class="btn btn--danger btn--sm" data-delete-id="${row.id}">Delete</button>
         </td>
       </tr>`
       )
       .join("");
+
+    if (editingId) highlightEditingRow(editingId);
   }
 
   async function loadForEdit(id) {
     const { data, error } = await supabaseClient.from(TABLE).select("*").eq("id", id).single();
     if (error) {
-      alert(error.message);
+      setStatus(error.message, true);
       return;
     }
+
     editingId = id;
-    const form = document.getElementById("admin-form");
+    existingImages = Array.isArray(data.images) ? data.images.filter(Boolean) : [];
+
+    const form = formEl();
     if (!form) return;
+
     form.title.value = data.title || "";
     form.subtitle.value = data.subtitle || "";
     form.language.value = data.language || "mk";
@@ -80,38 +163,77 @@
     if (form.event_date) form.event_date.value = data.event_date || "";
     if (form.location) form.location.value = data.location || "";
     if (form.year) form.year.value = data.year || "";
+
     setEditorHtml(quill, data.body || "");
-    document.getElementById("form-mode-label").textContent = "Edit post #" + id;
+    renderExistingImages();
+    setEditorModeUI(true, data.title || "");
+    highlightEditingRow(id);
+    setStatus("Make your changes, then click Save changes.", false);
+
+    const filter = document.getElementById("admin-language-filter");
+    if (filter && data.language) filter.value = data.language;
+
+    document.getElementById("admin-form-panel")?.scrollIntoView({ behavior: "smooth", block: "start" });
+
+    if (window.history.replaceState) {
+      const url = new URL(window.location.href);
+      url.searchParams.set("edit", String(id));
+      window.history.replaceState({}, "", url.pathname + url.search);
+    }
   }
 
   async function deleteRow(id) {
     if (!confirm("Delete this item permanently?")) return;
     const { error } = await supabaseClient.from(TABLE).delete().eq("id", id);
     if (error) {
-      alert(error.message);
+      setStatus(error.message, true);
       return;
     }
+    if (Number(editingId) === Number(id)) resetForm();
+    setStatus("Deleted.", false);
     const lang = document.getElementById("admin-language-filter")?.value || "mk";
     loadList(lang);
   }
 
   function resetForm() {
     editingId = null;
-    const form = document.getElementById("admin-form");
+    existingImages = [];
+    const form = formEl();
     if (form) form.reset();
     setEditorHtml(quill, "");
-    document.getElementById("form-mode-label").textContent = "Create new";
+    renderExistingImages();
+    setEditorModeUI(false);
+    setStatus("", false);
+    highlightEditingRow(null);
+
     const files = document.getElementById("admin-files");
     if (files) files.value = "";
+
+    if (window.history.replaceState) {
+      const url = new URL(window.location.href);
+      url.searchParams.delete("edit");
+      window.history.replaceState({}, "", url.pathname + url.search);
+    }
+  }
+
+  function markActiveNav() {
+    const page = location.pathname.split("/").pop();
+    document.querySelectorAll(".admin-header__nav a[href]").forEach((a) => {
+      const href = a.getAttribute("href");
+      a.classList.toggle("admin-header__nav-link--active", href === page);
+    });
   }
 
   document.addEventListener("DOMContentLoaded", async () => {
     if (!TABLE || !BUCKET) return;
 
     await requireAdminSession();
+    markActiveNav();
 
     const titleEl = document.getElementById("admin-page-title");
     if (titleEl) titleEl.textContent = PAGE_TITLE;
+
+    setEditorModeUI(false);
 
     quill = initRichEditor("admin-editor", {
       bucket: "content-media",
@@ -125,7 +247,7 @@
       loadList(filter.value || "mk");
     }
 
-    document.getElementById("admin-form")?.addEventListener("submit", async (e) => {
+    formEl()?.addEventListener("submit", async (e) => {
       e.preventDefault();
       const userId = await getCurrentUserId();
       if (!userId) return;
@@ -133,23 +255,21 @@
       const form = e.target;
       const fd = new FormData(form);
       const bodyHtml = getEditorHtml(quill);
+      if (!fd.get("title")?.toString().trim()) {
+        setStatus("Title is required.", true);
+        return;
+      }
       if (!bodyHtml || bodyHtml === "<p><br></p>") {
-        alert("Body is required");
+        setStatus("Content body is required.", true);
         return;
       }
 
-      try {
-        const imageUrls = await uploadGalleryFiles(document.getElementById("admin-files")?.files);
-        let images = imageUrls;
+      setStatus(editingId ? "Saving changes…" : "Creating…", false);
+      if (submitBtnEl()) submitBtnEl().disabled = true;
 
-        if (editingId) {
-          const { data: existingRow } = await supabaseClient
-            .from(TABLE)
-            .select("images")
-            .eq("id", editingId)
-            .single();
-          images = [...(existingRow?.images || []), ...imageUrls];
-        }
+      try {
+        const newUrls = await uploadGalleryFiles(document.getElementById("admin-files")?.files);
+        const images = [...existingImages, ...newUrls];
 
         const payload = {
           author_id: userId,
@@ -174,21 +294,33 @@
         }
 
         if (error) throw error;
-        alert(editingId ? "Updated" : "Saved");
+
+        const lang = payload.language;
+        const wasEditing = !!editingId;
         resetForm();
-        loadList(payload.language);
+        await loadList(lang);
+        setStatus(wasEditing ? "Changes saved successfully." : "Content created successfully.", false);
       } catch (err) {
-        alert(err.message || "Save failed");
+        setStatus(err.message || "Save failed", true);
+      } finally {
+        if (submitBtnEl()) submitBtnEl().disabled = false;
       }
     });
 
-    document.getElementById("admin-reset-btn")?.addEventListener("click", resetForm);
+    resetBtnEl()?.addEventListener("click", resetForm);
 
     document.addEventListener("click", (ev) => {
       const editId = ev.target.getAttribute("data-edit-id");
       const deleteId = ev.target.getAttribute("data-delete-id");
+      const removeIdx = ev.target.getAttribute("data-remove-image");
+
       if (editId) loadForEdit(Number(editId));
       if (deleteId) deleteRow(Number(deleteId));
+      if (removeIdx !== null && removeIdx !== "") {
+        existingImages.splice(Number(removeIdx), 1);
+        renderExistingImages();
+        setStatus("Image removed from gallery. Click Save changes to apply.", false);
+      }
     });
 
     document.getElementById("admin-signout")?.addEventListener("click", async (ev) => {
@@ -196,5 +328,8 @@
       await signOut();
       window.location.href = "login.html";
     });
+
+    const editParam = new URLSearchParams(window.location.search).get("edit");
+    if (editParam) loadForEdit(Number(editParam));
   });
 })();
