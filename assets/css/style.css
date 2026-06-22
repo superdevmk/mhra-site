@@ -96,9 +96,75 @@ html {
 /* Mobile tweaks */
 @media (max-width: 768px) {
   .home-hero__content {
-    padding: 2.25rem 1.5rem 2.5rem;
+    padding: 2rem 1.15rem 2.25rem;
     border-radius: 24px;
-    margin-inline: 1rem;
+    margin-inline: 0.75rem;
+  }
+
+  .home-hero .hero__subtitle {
+    font-size: 0.94rem;
+    line-height: 1.55;
+    margin-bottom: 1.25rem;
+  }
+
+  .home-hero .hero__meta {
+    flex-direction: column;
+    gap: 0.45rem;
+    font-size: 0.82rem;
+    line-height: 1.45;
+  }
+}
+
+@media (max-width: 640px) {
+  .home-hero__content {
+    padding: 1.65rem 1rem 2rem;
+  }
+
+  .home-hero .hero__title {
+    font-size: clamp(1.65rem, 7.5vw, 2rem);
+    line-height: 1.15;
+    margin-bottom: 0.65rem;
+  }
+
+  .home-hero .hero__actions {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 0.6rem;
+    width: 100%;
+    margin-bottom: 1.15rem;
+    padding: 0.75rem;
+    border-radius: 16px;
+    background: rgba(15, 23, 42, 0.42);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+  }
+
+  .home-hero .hero__actions .btn {
+    width: 100%;
+    min-height: 46px;
+    padding: 0.6rem 0.75rem;
+    font-size: 0.84rem;
+    line-height: 1.25;
+    text-align: center;
+    justify-content: center;
+    white-space: normal;
+  }
+
+  .home-hero .hero__actions .btn--primary {
+    grid-column: 1 / -1;
+    min-height: 50px;
+    font-size: 0.82rem;
+    padding: 0.65rem 0.85rem;
+  }
+
+  .home-hero .btn--outline {
+    border-color: rgba(255, 255, 255, 0.85);
+  }
+}
+
+@media (max-width: 380px) {
+  .home-hero .hero__actions {
+    grid-template-columns: 1fr;
   }
 }
 /* HERO bold text */
@@ -668,15 +734,40 @@ ul {
     font-size: 0.9rem;
   }
 
+  /* Hide duplicate tickets link when CTA already promotes tickets */
+  .nav__menu.nav__menu--open:has(.nav__cta a[href*="ticket"]) .nav__links .nav__link[href*="tickets.html"] {
+    display: none;
+  }
+
   .nav__menu.nav__menu--open .nav__cta {
     display: flex;
+    flex-direction: column;
+    gap: 0.6rem;
     width: 100%;
-    margin-top: 0.75rem;
+    margin-top: 0.85rem;
+    padding-top: 0.85rem;
+    border-top: 1px solid var(--mhra-border);
   }
 
   .nav__menu.nav__menu--open .nav__cta .btn {
     width: 100%;
+    min-height: 46px;
+    padding: 0.65rem 1rem;
+    font-size: 0.92rem;
+    line-height: 1.25;
+    border-radius: 12px;
     justify-content: center;
+    white-space: normal;
+    text-align: center;
+  }
+
+  .nav__menu.nav__menu--open .nav__cta .btn--primary {
+    box-shadow: 0 8px 18px rgba(249, 115, 22, 0.32);
+  }
+
+  .nav__menu.nav__menu--open .nav__cta .btn--outline {
+    border-color: #d1d5db;
+    background: #f9fafb;
   }
 
   .section-shell,
