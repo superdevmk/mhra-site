@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="mk">
+<head><meta charset="utf-8"/><title>Статус на нарачка</title><meta name="viewport" content="width=device-width, initial-scale=1"/><link href="../assets/css/style.css" rel="stylesheet"/></head>
+<body id="ticket-result-root">
+<main class="section"><div class="section-shell section-shell--compact">
+<h1 class="section__title">Статус на нарачка</h1>
+<div class="form card" style="max-width:480px">
+<label class="form__label" for="ticket-status-ref">Референца (Details2)</label>
+<input class="form__input" id="ticket-status-ref" type="text" maxlength="10"/>
+<label class="form__label" for="ticket-status-email">E-mail од нарачката</label>
+<input class="form__input" id="ticket-status-email" type="email"/>
+<button class="btn btn--primary" id="ticket-status-lookup" type="button">Провери</button>
+</div>
+<div id="ticket-result-details" hidden></div>
+</div></main>
+<script src="../assets/js/utils.js"></script>
+<script src="../assets/js/ticketsCommon.js"></script>
+<script src="../assets/js/ticketResult.js"></script>
+</body></html>

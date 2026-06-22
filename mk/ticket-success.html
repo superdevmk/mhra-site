@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html lang="mk">
+<head><meta charset="utf-8"/><title>Успешно плаќање</title><meta name="viewport" content="width=device-width, initial-scale=1"/><link href="../assets/css/style.css" rel="stylesheet"/></head>
+<body id="ticket-result-root">
+<main class="section"><div class="section-shell section-shell--compact ticket-result">
+<div class="ticket-result__icon ticket-result__icon--success">✓</div>
+<h1 class="section__title">Плаќањето е успешно</h1>
+<p class="section__subtitle">Ви благодариме! Потврда ќе биде испратена на вашиот e-mail.</p>
+<div id="ticket-result-details" hidden></div>
+<p class="form__hint">Референца: <code id="ticket-ref-display"></code></p>
+<a class="btn btn--primary" href="tickets.html">Назад кон конференцијата</a>
+</div></main>
+<script src="../assets/js/utils.js"></script>
+<script src="../assets/js/ticketsCommon.js"></script>
+<script src="../assets/js/ticketResult.js"></script>
+<script>document.getElementById("ticket-ref-display").textContent=new URLSearchParams(location.search).get("ref")||"";</script>
+</body></html>

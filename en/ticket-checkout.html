@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<title>Ticket checkout — MHRA 2026</title>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<link href="../assets/css/style.css" rel="stylesheet"/>
+</head>
+<body>
+<header class="header"><div class="nav-wrapper"><div class="nav">
+<a class="nav__brand" href="index.html"><img alt="MHRA" class="nav__logo-img" src="../assets/img/mhra_logo.jpg"/></a>
+<nav class="nav__menu"><div class="nav__links"><a class="nav__link" href="tickets.html">← Early Bird</a></div></nav>
+</div></div></header>
+
+<main class="section"><div class="section-shell section-shell--compact ticket-checkout-layout">
+<h1 class="section__title">Ticket checkout</h1>
+<p class="section__subtitle">Fill in the details required by cPay (3DS) and MHRA.</p>
+
+<div class="ticket-checkout-grid">
+<form class="form card ticket-checkout-form" id="ticket-checkout-form">
+<div class="form__row-grid">
+<div class="form__row"><label class="form__label" for="firstName">First name *</label><input class="form__input" id="firstName" name="firstName" required type="text" autocomplete="given-name"/></div>
+<div class="form__row"><label class="form__label" for="lastName">Last name *</label><input class="form__input" id="lastName" name="lastName" required type="text" autocomplete="family-name"/></div>
+</div>
+<div class="form__row"><label class="form__label" for="email">Email *</label><input class="form__input" id="email" name="email" required type="email" autocomplete="email"/></div>
+<div class="form__row"><label class="form__label" for="telephone">Phone * (3897xxxxxx)</label><input class="form__input" id="telephone" name="telephone" required type="tel" pattern="[0-9+]{8,15}" placeholder="38970123456"/></div>
+<div class="form__row"><label class="form__label" for="company">Company (optional)</label><input class="form__input" id="company" name="company" type="text"/></div>
+<div class="form__row"><label class="form__label" for="address">Address *</label><input class="form__input" id="address" name="address" required type="text" autocomplete="street-address"/></div>
+<div class="form__row-grid">
+<div class="form__row"><label class="form__label" for="city">City *</label><input class="form__input" id="city" name="city" required type="text" autocomplete="address-level2"/></div>
+<div class="form__row"><label class="form__label" for="zip">Postal code *</label><input class="form__input" id="zip" name="zip" required type="text" autocomplete="postal-code"/></div>
+</div>
+<div class="form__row-grid">
+<div class="form__row"><label class="form__label" for="ticket-type">Ticket type</label>
+<select class="form__select" id="ticket-type" name="ticketType">
+<option value="early_bird">Early Bird</option>
+<option value="regular">Regular</option>
+</select></div>
+<div class="form__row"><label class="form__label" for="ticket-quantity">Quantity</label>
+<input class="form__input" id="ticket-quantity" name="quantity" min="1" max="20" type="number" value="1"/></div>
+</div>
+<p class="form__hint">* Required for card payment (cPay / 3DS).</p>
+<p class="ticket-status" id="ticket-checkout-status" aria-live="polite"></p>
+<div class="ticket-checkout-actions">
+<button class="btn btn--primary" id="ticket-pay-card" type="button">Pay by card</button>
+<button class="btn btn--outline" id="ticket-pay-bank" type="button">Bank transfer</button>
+</div>
+</form>
+
+<aside class="card ticket-summary-card">
+<h2 class="card__title">Summary</h2>
+<div id="ticket-order-summary"></div>
+<p class="form__hint">Clicking pay creates an order with a unique cPay reference (Details2).</p>
+</aside>
+</div>
+</div></main>
+
+<script src="../assets/js/main.js"></script>
+<script src="../assets/js/utils.js"></script>
+<script src="../assets/js/ticketsCommon.js"></script>
+<script src="../assets/js/ticketCheckout.js"></script>
+</body>
+</html>

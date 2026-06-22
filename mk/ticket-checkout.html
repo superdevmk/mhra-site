@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="mk">
+<head>
+<meta charset="utf-8"/>
+<title>Нарачка билет — MHRA 2026</title>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<link href="../assets/css/style.css" rel="stylesheet"/>
+</head>
+<body>
+<header class="header"><div class="nav-wrapper"><div class="nav">
+<a class="nav__brand" href="index.html"><img alt="MHRA" class="nav__logo-img" src="../assets/img/mhra_logo.jpg"/></a>
+<nav class="nav__menu"><div class="nav__links"><a class="nav__link" href="tickets.html">← Early Bird</a></div></nav>
+</div></div></header>
+
+<main class="section"><div class="section-shell section-shell--compact ticket-checkout-layout">
+<h1 class="section__title">Нарачка на билет</h1>
+<p class="section__subtitle">Пополнете ги податоците како што ги бара cPay (3DS) и MHRA.</p>
+
+<div class="ticket-checkout-grid">
+<form class="form card ticket-checkout-form" id="ticket-checkout-form">
+<div class="form__row-grid">
+<div class="form__row"><label class="form__label" for="firstName">Име *</label><input class="form__input" id="firstName" name="firstName" required type="text" autocomplete="given-name"/></div>
+<div class="form__row"><label class="form__label" for="lastName">Презиме *</label><input class="form__input" id="lastName" name="lastName" required type="text" autocomplete="family-name"/></div>
+</div>
+<div class="form__row"><label class="form__label" for="email">E-mail *</label><input class="form__input" id="email" name="email" required type="email" autocomplete="email"/></div>
+<div class="form__row"><label class="form__label" for="telephone">Телефон * (3897xxxxxx)</label><input class="form__input" id="telephone" name="telephone" required type="tel" pattern="[0-9+]{8,15}" placeholder="38970123456"/></div>
+<div class="form__row"><label class="form__label" for="company">Компанија (опционално)</label><input class="form__input" id="company" name="company" type="text"/></div>
+<div class="form__row"><label class="form__label" for="address">Адреса *</label><input class="form__input" id="address" name="address" required type="text" autocomplete="street-address"/></div>
+<div class="form__row-grid">
+<div class="form__row"><label class="form__label" for="city">Град *</label><input class="form__input" id="city" name="city" required type="text" autocomplete="address-level2"/></div>
+<div class="form__row"><label class="form__label" for="zip">Поштенски број *</label><input class="form__input" id="zip" name="zip" required type="text" autocomplete="postal-code"/></div>
+</div>
+<div class="form__row-grid">
+<div class="form__row"><label class="form__label" for="ticket-type">Тип билет</label>
+<select class="form__select" id="ticket-type" name="ticketType">
+<option value="early_bird">Early Bird</option>
+<option value="regular">Редовен</option>
+</select></div>
+<div class="form__row"><label class="form__label" for="ticket-quantity">Количина</label>
+<input class="form__input" id="ticket-quantity" name="quantity" min="1" max="20" type="number" value="1"/></div>
+</div>
+<p class="form__hint">* Полињата се потребни за картично плаќање (cPay / 3DS).</p>
+<p class="ticket-status" id="ticket-checkout-status" aria-live="polite"></p>
+<div class="ticket-checkout-actions">
+<button class="btn btn--primary" id="ticket-pay-card" type="button">Плати со картичка</button>
+<button class="btn btn--outline" id="ticket-pay-bank" type="button">Уплата на сметка</button>
+</div>
+</form>
+
+<aside class="card ticket-summary-card">
+<h2 class="card__title">Резиме</h2>
+<div id="ticket-order-summary"></div>
+<p class="form__hint">Со клик на „Плати“ се креира нарачка со уникатна референца (Details2) за cPay.</p>
+</aside>
+</div>
+</div></main>
+
+<script src="../assets/js/main.js"></script>
+<script src="../assets/js/utils.js"></script>
+<script src="../assets/js/ticketsCommon.js"></script>
+<script src="../assets/js/ticketCheckout.js"></script>
+</body>
+</html>
