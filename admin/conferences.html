@@ -70,11 +70,17 @@
           <div id="admin-editor" class="rich-editor"></div>
           <input type="hidden" id="admin-body-html" name="body_html" />
         </div>
+        <div class="form__field admin-cover-field">
+          <label for="admin-cover-file">Cover photo</label>
+          <div id="admin-cover-preview" class="admin-cover-preview" hidden></div>
+          <input type="file" id="admin-cover-file" accept="image/*" />
+          <p class="form__hint">Main image on cards and article pages. Upload here or pick one from the gallery below.</p>
+        </div>
         <div class="form__field">
           <label>Gallery images</label>
           <div id="admin-existing-images" hidden></div>
           <input type="file" id="admin-files" multiple accept="image/*" />
-          <p class="form__hint">First image is used as the cover on the public site. Upload adds to the gallery.</p>
+          <p class="form__hint">Additional photos for the article gallery. Use <strong>Set as cover</strong> on any image.</p>
         </div>
         <p class="admin-form-status" id="admin-form-status" aria-live="polite"></p>
         <div class="form__actions admin-form__actions">

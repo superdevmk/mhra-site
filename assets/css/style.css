@@ -3278,6 +3278,64 @@ body.modal-open {
   margin: 0;
 }
 
+.admin-existing-images__item--cover img {
+  border-color: var(--mhra-orange);
+  box-shadow: 0 0 0 2px rgba(249, 115, 22, 0.35);
+}
+
+.admin-existing-images__actions {
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+}
+
+.admin-cover-badge {
+  display: inline-block;
+  margin-bottom: 0.35rem;
+  padding: 0.15rem 0.55rem;
+  border-radius: 999px;
+  background: var(--mhra-orange);
+  color: #fff;
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+
+.admin-cover-current {
+  font-size: 0.78rem;
+  font-weight: 600;
+  color: #c2410c;
+}
+
+.admin-cover-preview {
+  margin-bottom: 0.75rem;
+}
+
+.admin-cover-preview__figure {
+  margin: 0;
+  max-width: 240px;
+}
+
+.admin-cover-preview__figure img {
+  width: 100%;
+  aspect-ratio: 16 / 10;
+  object-fit: cover;
+  border-radius: 10px;
+  border: 2px solid var(--mhra-orange);
+  box-shadow: 0 8px 20px rgba(15, 23, 42, 0.12);
+}
+
+.admin-cover-preview__figure figcaption {
+  margin-top: 0.35rem;
+  font-size: 0.82rem;
+  color: #6b7280;
+}
+
+.admin-cover-field input[type="file"] {
+  max-width: 100%;
+}
+
 .admin-existing-images__item img {
   width: 100%;
   aspect-ratio: 4 / 3;

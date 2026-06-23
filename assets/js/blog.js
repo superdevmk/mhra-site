@@ -16,6 +16,7 @@ let blogQuill = null;
 let currentUserId = null;
 let postsCache = [];
 let editingPostId = null;
+let blogCoverPreviewObjectUrl = null;
 
 function t(key) {
   const lang = getPageLang();
@@ -54,10 +55,44 @@ function setEditorModeUI(isEditing) {
   }
 }
 
+function revokeBlogCoverPreviewUrl() {
+  if (blogCoverPreviewObjectUrl) {
+    URL.revokeObjectURL(blogCoverPreviewObjectUrl);
+    blogCoverPreviewObjectUrl = null;
+  }
+}
+
+function renderBlogCoverPreview(imageUrl, file) {
+  const el = document.getElementById("post-cover-preview");
+  if (!el) return;
+
+  revokeBlogCoverPreviewUrl();
+  let previewSrc = imageUrl || null;
+  if (file) {
+    blogCoverPreviewObjectUrl = URL.createObjectURL(file);
+    previewSrc = blogCoverPreviewObjectUrl;
+  }
+
+  if (!previewSrc) {
+    el.hidden = true;
+    el.innerHTML = "";
+    return;
+  }
+
+  el.hidden = false;
+  el.innerHTML = `
+    <figure class="admin-cover-preview__figure">
+      <img src="${escapeHtml(previewSrc)}" alt="" loading="lazy">
+      <figcaption>${file ? (getPageLang() === "mk" ? "Нова насловна слика" : "New cover image") : (getPageLang() === "mk" ? "Тековна насловна слика" : "Current cover image")}</figcaption>
+    </figure>`;
+}
+
 function cancelEdit() {
   editingPostId = null;
   if (createForm) createForm.reset();
   if (blogQuill) setEditorHtml(blogQuill, "");
+  revokeBlogCoverPreviewUrl();
+  renderBlogCoverPreview(null, null);
   setEditorModeUI(false);
   setStatus("", false);
   if (window.history.replaceState) {
@@ -145,6 +180,8 @@ function startEditPost(id) {
   createTitleInput.value = post.title;
   setEditorHtml(blogQuill, post.body);
   if (createBodyHidden) createBodyHidden.value = post.body;
+  if (createImageInput) createImageInput.value = "";
+  renderBlogCoverPreview(post.image_url, null);
   setEditorModeUI(true);
   createSection.scrollIntoView({ behavior: "smooth" });
   setStatus(t("editingMode"), false);
@@ -186,6 +223,9 @@ document.addEventListener("DOMContentLoaded", async () => {
 
   if (createForm) createForm.addEventListener("submit", handleCreateSubmit);
   if (cancelEditBtnEl) cancelEditBtnEl.addEventListener("click", cancelEdit);
+  createImageInput?.addEventListener("change", () => {
+    renderBlogCoverPreview(null, createImageInput.files?.[0] || null);
+  });
 
   setEditorModeUI(false);
 
