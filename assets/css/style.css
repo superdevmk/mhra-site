@@ -3116,14 +3116,17 @@ body.modal-open {
   margin-bottom: 0.25rem;
 }
 
-.admin-form .admin-cover-field,
-.admin-form .form__field:has(#admin-files) {
+.admin-form .admin-photos-field {
   clear: both;
   position: relative;
   z-index: 1;
   margin-top: 1rem;
   padding-top: 1rem;
   border-top: 1px solid #e5e7eb;
+}
+
+.admin-form .admin-photos-field input[type="file"] {
+  max-width: 100%;
 }
 
 .blog-editor-card {
