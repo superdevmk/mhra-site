@@ -3089,15 +3089,67 @@ body.modal-open {
 
 .admin-form .rich-editor,
 .admin-form .ql-container {
-  min-height: 320px;
+  height: auto !important;
+  min-height: 220px;
+  max-height: none;
+  display: block;
+  position: relative;
+  overflow: hidden;
+  border: 1px solid #d1d5db;
+  border-top: none;
+}
+
+.admin-form .form__field > .ql-toolbar.ql-snow {
+  border: 1px solid #d1d5db;
+  border-radius: 8px 8px 0 0;
+  background: #fff;
 }
 
 .admin-form .ql-editor {
-  min-height: 300px;
+  min-height: 200px;
+  height: auto !important;
+  max-height: min(55vh, 520px);
+  overflow-y: auto;
+}
+
+.admin-form .form__field:has(#admin-editor) {
+  margin-bottom: 0.25rem;
+}
+
+.admin-form .admin-cover-field,
+.admin-form .form__field:has(#admin-files) {
+  clear: both;
+  position: relative;
+  z-index: 1;
+  margin-top: 1rem;
+  padding-top: 1rem;
+  border-top: 1px solid #e5e7eb;
 }
 
 .blog-editor-card {
   padding: 1.25rem 1.5rem 1.5rem;
+}
+
+.blog-editor-card .rich-editor.ql-container,
+.blog-editor-card .ql-container.ql-snow {
+  height: auto !important;
+  min-height: 220px;
+  overflow: hidden;
+  border: 1px solid #d1d5db;
+  border-top: none;
+}
+
+.blog-editor-card .form-group > .ql-toolbar.ql-snow {
+  border: 1px solid #d1d5db;
+  border-radius: 8px 8px 0 0;
+  background: #fff;
+}
+
+.blog-editor-card .ql-editor {
+  min-height: 200px;
+  height: auto !important;
+  max-height: min(55vh, 520px);
+  overflow-y: auto;
 }
 
 .blog-form__mode {
