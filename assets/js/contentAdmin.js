@@ -6,8 +6,10 @@
 
   let quill = null;
   let editingId = null;
-  let existingImages = [];
   let coverUrl = null;
+  let albumImages = [];
+  let coverPreviewObjectUrl = null;
+  let albumPendingPreviewUrls = [];
 
   const formEl = () => document.getElementById("admin-form");
   const statusEl = () => document.getElementById("admin-form-status");
@@ -58,44 +60,98 @@
     });
   }
 
-  function orderImagesWithCover(urls) {
-    const list = [...new Set(urls.filter(Boolean))];
-    if (!coverUrl || !list.includes(coverUrl)) return list;
-    return [coverUrl, ...list.filter((url) => url !== coverUrl)];
+  function revokeCoverPreviewUrl() {
+    if (coverPreviewObjectUrl) {
+      URL.revokeObjectURL(coverPreviewObjectUrl);
+      coverPreviewObjectUrl = null;
+    }
   }
 
-  function renderExistingImages() {
-    const el = document.getElementById("admin-existing-images");
+  function revokeAlbumPendingPreviews() {
+    albumPendingPreviewUrls.forEach((url) => URL.revokeObjectURL(url));
+    albumPendingPreviewUrls = [];
+  }
+
+  function buildImagesPayload(finalCover, albumUrls) {
+    const images = [];
+    if (finalCover) images.push(finalCover);
+    albumUrls.forEach((url) => {
+      if (url && url !== finalCover && !images.includes(url)) images.push(url);
+    });
+    return images;
+  }
+
+  function renderCoverPreview() {
+    const el = document.getElementById("admin-cover-preview");
     if (!el) return;
 
-    if (!existingImages.length) {
-      el.innerHTML = "";
+    const coverFile = document.getElementById("admin-cover-file")?.files?.[0];
+    let previewSrc = coverUrl;
+
+    revokeCoverPreviewUrl();
+    if (coverFile) {
+      coverPreviewObjectUrl = URL.createObjectURL(coverFile);
+      previewSrc = coverPreviewObjectUrl;
+    }
+
+    if (!previewSrc) {
       el.hidden = true;
+      el.innerHTML = "";
+      return;
+    }
+
+    el.hidden = false;
+    el.innerHTML = `
+      <figure class="admin-cover-preview__figure">
+        <img src="${escapeHtml(previewSrc)}" alt="" loading="lazy">
+        <figcaption>${coverFile ? "New cover" : "Current cover"}</figcaption>
+      </figure>`;
+  }
+
+  function renderAlbumPreview() {
+    const el = document.getElementById("admin-album-preview");
+    if (!el) return;
+
+    const hasSaved = albumImages.length > 0;
+    const hasPending = albumPendingPreviewUrls.length > 0;
+
+    if (!hasSaved && !hasPending) {
+      el.hidden = true;
+      el.innerHTML = "";
       return;
     }
 
     el.hidden = false;
     el.innerHTML = `
       <div class="admin-existing-images__grid">
-        ${existingImages
-          .map((url, index) => {
-            const isCover = url === coverUrl;
-            return `
-          <figure class="admin-existing-images__item${isCover ? " admin-existing-images__item--cover" : ""}">
-            ${isCover ? '<span class="admin-cover-badge">Cover</span>' : ""}
+        ${albumImages
+          .map(
+            (url, index) => `
+          <figure class="admin-existing-images__item">
             <img src="${escapeHtml(url)}" alt="" loading="lazy">
-            <div class="admin-existing-images__actions">
-              ${
-                isCover
-                  ? ""
-                  : `<button type="button" class="btn btn--outline btn--sm" data-set-cover-index="${index}">Cover</button>`
-              }
-              <button type="button" class="btn btn--outline btn--sm" data-remove-image="${index}">Remove</button>
-            </div>
-          </figure>`;
-          })
+            <button type="button" class="btn btn--outline btn--sm" data-remove-album="${index}">Remove</button>
+          </figure>`
+          )
+          .join("")}
+        ${albumPendingPreviewUrls
+          .map(
+            (url) => `
+          <figure class="admin-existing-images__item admin-existing-images__item--pending">
+            <span class="admin-cover-badge admin-cover-badge--new">New</span>
+            <img src="${escapeHtml(url)}" alt="" loading="lazy">
+          </figure>`
+          )
           .join("")}
       </div>`;
+  }
+
+  function refreshAlbumPendingPreviews() {
+    revokeAlbumPendingPreviews();
+    const files = document.getElementById("admin-album-files")?.files;
+    if (files?.length) {
+      albumPendingPreviewUrls = Array.from(files).map((file) => URL.createObjectURL(file));
+    }
+    renderAlbumPreview();
   }
 
   async function getCurrentUserId() {
@@ -166,8 +222,9 @@
     }
 
     editingId = id;
-    existingImages = Array.isArray(data.images) ? data.images.filter(Boolean) : [];
-    coverUrl = existingImages[0] || null;
+    const allImages = Array.isArray(data.images) ? data.images.filter(Boolean) : [];
+    coverUrl = allImages[0] || null;
+    albumImages = allImages.slice(1);
 
     const form = formEl();
     if (!form) return;
@@ -181,7 +238,8 @@
     if (form.year) form.year.value = data.year || "";
 
     setEditorHtml(quill, data.body || "");
-    renderExistingImages();
+    renderCoverPreview();
+    renderAlbumPreview();
     setEditorModeUI(true, data.title || "");
     highlightEditingRow(id);
     setStatus("Make your changes, then click Save changes.", false);
@@ -213,18 +271,23 @@
 
   function resetForm() {
     editingId = null;
-    existingImages = [];
     coverUrl = null;
+    albumImages = [];
+    revokeCoverPreviewUrl();
+    revokeAlbumPendingPreviews();
     const form = formEl();
     if (form) form.reset();
     setEditorHtml(quill, "");
-    renderExistingImages();
+    renderCoverPreview();
+    renderAlbumPreview();
     setEditorModeUI(false);
     setStatus("", false);
     highlightEditingRow(null);
 
-    const files = document.getElementById("admin-files");
-    if (files) files.value = "";
+    const coverInput = document.getElementById("admin-cover-file");
+    const albumInput = document.getElementById("admin-album-files");
+    if (coverInput) coverInput.value = "";
+    if (albumInput) albumInput.value = "";
 
     if (window.history.replaceState) {
       const url = new URL(window.location.href);
@@ -264,6 +327,9 @@
       loadList(filter.value || "mk");
     }
 
+    document.getElementById("admin-cover-file")?.addEventListener("change", renderCoverPreview);
+    document.getElementById("admin-album-files")?.addEventListener("change", refreshAlbumPendingPreviews);
+
     formEl()?.addEventListener("submit", async (e) => {
       e.preventDefault();
       const userId = await getCurrentUserId();
@@ -285,10 +351,15 @@
       if (submitBtnEl()) submitBtnEl().disabled = true;
 
       try {
-        const newUrls = await uploadGalleryFiles(document.getElementById("admin-files")?.files);
-        let images = [...existingImages, ...newUrls];
-        if (!coverUrl && images.length) coverUrl = images[0];
-        images = orderImagesWithCover(images);
+        let finalCover = coverUrl;
+        const coverFile = document.getElementById("admin-cover-file")?.files?.[0];
+        if (coverFile) {
+          const [uploadedCover] = await uploadGalleryFiles([coverFile]);
+          finalCover = uploadedCover;
+        }
+
+        const newAlbumUrls = await uploadGalleryFiles(document.getElementById("admin-album-files")?.files);
+        const images = buildImagesPayload(finalCover, [...albumImages, ...newAlbumUrls]);
 
         const payload = {
           author_id: userId,
@@ -331,22 +402,14 @@
     document.addEventListener("click", (ev) => {
       const editId = ev.target.getAttribute("data-edit-id");
       const deleteId = ev.target.getAttribute("data-delete-id");
-      const removeIdx = ev.target.getAttribute("data-remove-image");
-      const coverIdx = ev.target.getAttribute("data-set-cover-index");
+      const removeAlbumIdx = ev.target.getAttribute("data-remove-album");
 
       if (editId) loadForEdit(Number(editId));
       if (deleteId) deleteRow(Number(deleteId));
-      if (coverIdx !== null && coverIdx !== "") {
-        coverUrl = existingImages[Number(coverIdx)] || null;
-        renderExistingImages();
-        setStatus("Cover updated. Click Save changes to apply.", false);
-      }
-      if (removeIdx !== null && removeIdx !== "") {
-        const removed = existingImages[Number(removeIdx)];
-        existingImages.splice(Number(removeIdx), 1);
-        if (removed === coverUrl) coverUrl = existingImages[0] || null;
-        renderExistingImages();
-        setStatus("Photo removed. Click Save changes to apply.", false);
+      if (removeAlbumIdx !== null && removeAlbumIdx !== "") {
+        albumImages.splice(Number(removeAlbumIdx), 1);
+        renderAlbumPreview();
+        setStatus("Album photo removed. Click Save changes to apply.", false);
       }
     });
 

@@ -56,11 +56,15 @@
           <div id="admin-editor" class="rich-editor"></div>
           <input type="hidden" id="admin-body-html" name="body_html" />
         </div>
-        <div class="form__field admin-photos-field">
-          <label for="admin-files">Photos</label>
-          <div id="admin-existing-images" hidden></div>
-          <input type="file" id="admin-files" multiple accept="image/*" />
-          <p class="form__hint">Upload one or more photos. Click <strong>Cover</strong> on the main image — the rest appear in the gallery.</p>
+        <div class="form__field admin-media-field">
+          <label for="admin-cover-file">Cover photo</label>
+          <div id="admin-cover-preview" class="admin-cover-preview" hidden></div>
+          <input type="file" id="admin-cover-file" accept="image/*" />
+        </div>
+        <div class="form__field admin-media-field">
+          <label for="admin-album-files">Album photos</label>
+          <div id="admin-album-preview" hidden></div>
+          <input type="file" id="admin-album-files" multiple accept="image/*" />
         </div>
         <p class="admin-form-status" id="admin-form-status" aria-live="polite"></p>
         <div class="form__actions admin-form__actions">
